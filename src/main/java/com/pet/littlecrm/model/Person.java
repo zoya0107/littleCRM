@@ -1,6 +1,7 @@
 package com.pet.littlecrm.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table
@@ -16,12 +17,12 @@ public class Person {
             strategy = GenerationType.SEQUENCE,
             generator = "user_sequence"
     )
-    private Long id;
+    public Long id;
 
-    private String firstname;
-    private String surname;
-    private String login;
-    private String password;
+    public String firstname;
+    public String surname;
+    public String login;
+    public String password;
 
     public Person() {
     }
