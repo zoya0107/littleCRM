@@ -1,10 +1,12 @@
 package com.pet.littlecrm.model;
 
+import lombok.Data;
+
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
-@Table
+@Table (name = "person")
+@Data
 public class Person {
 
     @Id
@@ -19,10 +21,20 @@ public class Person {
     )
     public Long id;
 
+    @Column(name="firstname")
     public String firstname;
+    @Column(name= "username")
     public String surname;
+    @Column(name="login")
     public String login;
+    @Column(name="password")
     public String password;
+    @Enumerated(value = EnumType.STRING)
+    @Column(name="role")
+    private Role role;
+    @Enumerated(value = EnumType.STRING)
+    @Column(name="status")
+    private Status status;
 
     public Person() {
     }
@@ -74,6 +86,5 @@ public class Person {
     public void setPassword(String password) {
         this.password = password;
     }
-
 
 }

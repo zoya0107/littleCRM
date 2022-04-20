@@ -12,22 +12,18 @@
 <div class="container">
     <h1>CRM System</h1>
     <hr>
-    <h2>Log in</h2>
-    <form th:object="${person}">
-        <label>
-            <input type="text" th:field="${person.login}" placeholder="Login" class="form-control mb-4 col-4">
-        </label>
-        <label>
-            <input type="text" th:field="${person.password}" placeholder="Password" class="form-control mb-4 col-4">
-        </label>
-        <a th:href="@{/main/{id}(id=${person.id})}" class="btn btn-primary">Enter</a>
-        <hr>
+    <form class="form-signin" method="post" action="/auth/login">
+        <h2 class="form-signin-heading">Login</h2>
+        <p>
+            <label for="username">Login</label>
+            <input type="text" id="username" name="username" class="form-control" placeholder="Username" required>
+        </p>
+        <p>
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+        </p>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
     </form>
-    <form action="#" th:action="@{/add}">
-        <button type="submit" class="btn btn-info col-2">Registration</button>
-    </form>
-
-
 </div>
 </body>
 </html>
