@@ -12,7 +12,7 @@
     <h1>Management System</h1>
     <hr>
     <h2>Save person</h2>
-    <form action="#" th:action="@{/add}" th:object="${person}" method="POST">
+    <form action="#" th:action="@{/home/add}" th:object="${person}" method="POST">
         <label>
             <input type="text" th:field="*{firstname}" placeholder="Firstname" class="form-control mb-4 col-4">
         </label>

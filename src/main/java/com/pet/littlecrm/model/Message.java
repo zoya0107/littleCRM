@@ -3,10 +3,9 @@ package com.pet.littlecrm.model;
 import javax.persistence.*;
 import java.time.LocalDate;
 
-
 @Entity
-@Table
-public class Order {
+@Table (name = "message")
+public class Message {
     @Id
     @SequenceGenerator(
             name = "order_sequence",
@@ -18,22 +17,30 @@ public class Order {
             generator = "order_sequence"
     )
     public Long id;
+    @Column(name="author")
     public String author;
+    @Column(name="date")
     public LocalDate date;
+    @Column(name="receiver")
     public String receiver;
-    public LocalDate dueDate;
-    public String message;
+    @Column(name="duedate")
+    public LocalDate duedate;
+    @Column(name= "content")
+    public String content;
+    @Column(name="topic")
+    public String topic;
 
-    public Order(Long id, String author, LocalDate date, String receiver, LocalDate dueDate, String message) {
+    public Message(Long id, String author, LocalDate date, String receiver, LocalDate duedate, String content, String topic) {
         this.id = id;
         this.author = author;
         this.date = date;
         this.receiver = receiver;
-        this.dueDate = dueDate;
-        this.message = message;
+        this.duedate = duedate;
+        this.content = content;
+        this.topic = topic;
     }
 
-    public Order() {
+    public Message() {
     }
 
     public Long getId() {
@@ -53,7 +60,7 @@ public class Order {
     }
 
     public LocalDate getDate() {
-        return date;
+        return LocalDate.now();
     }
 
     public void setDate(LocalDate date) {
@@ -69,18 +76,26 @@ public class Order {
     }
 
     public LocalDate getDueDate() {
-        return dueDate;
+        return duedate;
     }
 
-    public void setDueDate(LocalDate dueDate) {
-        this.dueDate = dueDate;
+    public void setDueDate(LocalDate duedate) {
+        this.duedate = duedate;
     }
 
-    public String getMessage() {
-        return message;
+    public String getContent() {
+        return content;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getTopic() {
+        return topic;
+    }
+
+    public void setTopic(String topic) {
+        this.topic = topic;
     }
 }

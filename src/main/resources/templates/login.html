@@ -12,19 +12,25 @@
 <div class="container">
     <h1>CRM System</h1>
     <hr>
-    <form class="form-signin" method="post" action="/auth/login">
+    <form id="login" class="form-signin" method="post" action="/auth/login">
         <h2 class="form-signin-heading">Login</h2>
         <p>
             <label for="username">Login</label>
-            <input type="text" id="username" name="username" class="form-control" placeholder="Username" required>
+            <input type="text" id="username" name="username" class="form-control" placeholder="Username" style="width: 25%;" required>
         </p>
         <p>
             <label for="password">Password</label>
-            <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+            <input type="password" id="password" name="password" class="form-control" placeholder="Password" style="width: 25%;" required>
         </p>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
     </form>
+    <div>
+        <button id="login_button" class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+    </div>
+    <hr>
 </div>
+<script>
+    document.getElementById('login_button').addEventListener('click', () => document.getElementById('login').submit());
+</script>
 </body>
 </html>
 
