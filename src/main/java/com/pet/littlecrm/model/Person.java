@@ -23,7 +23,7 @@ public class Person {
 
     @Column(name="firstname")
     public String firstname;
-    @Column(name= "username")
+    @Column(name= "surname")
     public String surname;
     @Column(name="login")
     public String login;
