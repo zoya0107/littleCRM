@@ -30,8 +30,7 @@ public class PersonService {
         Person person = null;
         if (optional.isPresent()) {
             person = optional.get();
-        }
-        else {
+        } else {
             throw new RuntimeException("There is no person with id " + id);
         }
         return person;
@@ -42,8 +41,7 @@ public class PersonService {
         Person person = null;
         if (optional.isPresent()) {
             person = optional.get();
-        }
-        else {
+        } else {
             throw new RuntimeException("There is no person with login " + login);
         }
         return person;
