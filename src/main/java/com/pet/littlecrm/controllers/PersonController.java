@@ -36,7 +36,7 @@ public class PersonController {
         return "home";
     }
 
-    @GetMapping("/createmessageform/{login}")
+    @GetMapping("/{login}/createmessageform/")
     @PreAuthorize("hasAuthority('people:read')")
     public String getNewMessagePage(@PathVariable(value = "login") String login, Model model) {
         Person person = personService.getPersonByLogin(login);
@@ -48,7 +48,7 @@ public class PersonController {
     @PostMapping("/createmessage/{login}")
     @PreAuthorize("hasAuthority('people:read')")
     public String createNewMessage(@PathVariable(value = "login") String login, @ModelAttribute("message") Message message) {
-        message.setAuthor(personService.getPersonByLogin(login).getFirstname());
+        message.setAuthor(login);
         message.setDate(LocalDate.now());
         messageService.saveMessage(message);
         return "redirect:/home";
@@ -73,16 +73,18 @@ public class PersonController {
         return "add";
     }
 
-    @PostMapping("/add")
+    @PostMapping("/{login}/add")
     @PreAuthorize("hasAuthority('people:write')")
-    public String addPerson(@ModelAttribute("person") Person person) {
+    public String addPerson(@ModelAttribute("person") Person person, Model model) {
         personService.savePerson(person);
-        return "redirect:/home/showlist";
-    }
+        return "redirect:/home/showlist/{login}";
+    }//!
 
-    @GetMapping("/showlist")
-    @PreAuthorize("hasAuthority('people:write')")
-    public String getListPeople(Model model) {
+    @GetMapping("/showlist/{login}")
+    @PreAuthorize("hasAuthority('people:read')")
+    public String getListPeople(@PathVariable(value = "login") String login, Model model) {
+        Person person = personService.getPersonByLogin(login);
+        model.addAttribute("curperson", person);
         model.addAttribute("listPeople", personService.getPeople());
         return "listpeople";
     }

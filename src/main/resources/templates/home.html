@@ -1,43 +1,99 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Update</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
-          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
-          crossorigin="anonymous">
+    <title>Home</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/yeti/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootlint@1.1.0/dist/browser/bootlint.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
 <div class="container">
     <h1>Welcome to CRM System, [[${#request.remoteUser}]]</h1>
     <hr>
-    <a th:href="@{/home/createmessageform/{login}(login=${#request.remoteUser})}" class="btn btn-primary">New message</a>
-    <a th:href="@{/home/showlist}" class="btn btn-primary">Users</a>
-    <a th:href="@{/logout}" style="background-color: red" class="btn btn-primary">Exit</a>
+    <a th:href="@{/home/{login}/createmessageform/(login=${#request.remoteUser})}" class="btn btn-primary">New
+        message</a>
+    <a th:href="@{/home/showlist/{login}(login=${#request.remoteUser})}" class="btn btn-primary">Users</a>
+    <a th:href="@{/logout}" style="background-color: indianred" class="btn btn-primary">Exit</a>
     <hr>
-    <table class="table table-striped table-responsive-md">
-        <thead>
-        <tr>
-            <th>Message number</th>
-            <th>Topic</th>
-            <th>Author</th>
-            <th>Date</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="message : ${listMessages}" th:if="${message.receiver} == ${#request.remoteUser}">
-            <td th:text="${message.id}"></td>
-            <td th:text="${message.topic}"></td>
-            <td th:text="${message.author}"></td>
-<!--            <td th:text="${person.surname}${person.firstname}"></td>-->
-            <td th:text="${message.date}"></td>
-            <td>
-                <a th:href="@{/home/showmessage/{id}(id=${message.id})}" class="btn btn-primary">Read</a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-    <hr>
+
+    <div class="tab">
+        <a id="inc_messages" class="btn btn-primary tablinks" onclick="openEnvelope(event, 'Incoming messages')">Incoming
+            messages</a>
+        <a id="sent_messages" class="btn btn-primary tablinks" onclick="openEnvelope(event, 'Sent messages')">Sent
+            messages</a>
+    </div>
+    <div id="Incoming messages" class="tabcontent">
+        <h3>Incoming messages</h3>
+        <table class="table table-striped table-responsive-md">
+            <thead>
+            <tr>
+                <th>Sender</th>
+                <th>Topic</th>
+                <th>Date</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="message : ${listMessages}" th:if="${message.receiver} == ${#request.remoteUser}">
+                <td th:text="${message.getPersonAuthor().firstname} + ' ' + ${message.getPersonAuthor().surname}"></td>
+                <td th:text="${message.topic}"></td>
+                <td th:text="${message.date}"></td>
+                <td>
+                    <a th:href="@{/home/showmessage/{id}(id=${message.id})}" class="btn btn-primary">Read</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="Sent messages" class="tabcontent">
+        <h3>Sent messages</h3>
+        <table class="table table-striped table-responsive-md">
+            <thead>
+            <tr>
+                <th>Receiver</th>
+                <th>Topic</th>
+                <th>Date</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="message : ${listMessages}" th:if="${message.author} == ${#request.remoteUser}">
+                <td th:text="${message.getPersonReceiver().firstname} + ' ' + ${message.getPersonReceiver().surname}"></td>
+                <td th:text="${message.topic}"></td>
+                <td th:text="${message.date}"></td>
+                <td>
+                    <a th:href="@{/home/showmessage/{id}(id=${message.id})}" class="btn btn-primary">Read</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
+<script>
+    document.getElementById("inc_messages").click();
+</script>
+<script>
+    function openEnvelope(evt, envName) {
+        var i, tabcontent, tablinks;
+
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+
+        document.getElementById(envName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+</script>
 </body>
 </html>
