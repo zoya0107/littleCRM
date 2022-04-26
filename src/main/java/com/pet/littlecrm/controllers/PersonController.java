@@ -48,7 +48,7 @@ public class PersonController {
     @PostMapping("/createmessage/{login}")
     @PreAuthorize("hasAuthority('people:read')")
     public String createNewMessage(@PathVariable(value = "login") String login, @ModelAttribute("message") Message message) {
-        message.setAuthor(personService.getPersonByLogin(login).getFirstname());
+        message.setAuthor(login);
         message.setDate(LocalDate.now());
         messageService.saveMessage(message);
         return "redirect:/home";

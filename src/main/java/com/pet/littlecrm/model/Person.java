@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "person")
@@ -36,6 +37,9 @@ public class Person implements Serializable {
     @Enumerated(value = EnumType.STRING)
     @Column(name = "status")
     private Status status;
+
+    @OneToMany(mappedBy = "personReceiver")
+    private List<Message> listMessages;
 
     public Person() {
     }

@@ -25,16 +25,18 @@
         <label>
             <input type="text" th:field="*{password}" placeholder="Password" class="form-control mb-4 col-4">
         </label>
+        <p></p>
         <label for="role">Role: </label>
-        <select class="form-control" id="role" name="role">
+        <select class="form-control" id="role" name="role" style="width:200px;">
             <option th:each="role : ${roleoptions}" th:text="${role}" th:value="${role}">
             </option>
         </select>
         <label for="status">Status: </label>
-        <select class="form-control" id="status" name="status">
+        <select class="form-control" id="status" name="status" style="width:200px;">
             <option th:each="status : ${statusoptions}" th:text="${status}" th:value="${status}">
             </option>
         </select>
+        <p></p>
         <button type="submit" class="btn btn-info col-2">Save person</button>
     </form>
 </div>

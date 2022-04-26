@@ -15,26 +15,27 @@
     <form id="update" action="#" th:action="@{/home/add}" th:object="${person}" method="POST">
         <input type="hidden" th:field="*{id}"/>
         <label for="firstname">Firstname: </label>
-        <input id="firstname" type="text" th:field="*{firstname}" class="form-control mb-4 col-4">
+        <input id="firstname" type="text" th:field="*{firstname}" class="form-control mb-4 col-4" style="width:250px;">
         <label for="surname">Surname: </label>
-        <input id="surname" type="text" th:field="*{surname}" class="form-control mb-4 col-4">
+        <input id="surname" type="text" th:field="*{surname}" class="form-control mb-4 col-4" style="width:250px;">
         <label for="login">Login: </label>
-        <input id="login" type="text" th:field="*{login}" class="form-control mb-4 col-4">
+        <input id="login" type="text" th:field="*{login}" class="form-control mb-4 col-4" style="width:250px;">
         <label for="password">Password: </label>
-        <input id="password" type="text" th:field="*{password}" class="form-control mb-4 col-4">
+        <input id="password" type="text" th:field="*{password}" class="form-control mb-4 col-4" style="width:250px;">
         <label for="role">Role: </label>
-        <select class="form-control" id="role" name="role">
+        <select class="form-control" id="role" name="role" style="width:250px;">
             <option th:each="role : ${roleoptions}" th:text="${role}" th:value="${role}"
                     th:selected="(${role == person.getRole()})">
             </option>
         </select>
         <label for="status">Status: </label>
-        <select class="form-control" id="status" name="status">
+        <select class="form-control" id="status" name="status" style="width:250px;">
             <option th:each="status : ${statusoptions}" th:text="${status}" th:value="${status}"
                     th:selected="(${status == person.status.name()})">
             </option>
         </select>
     </form>
+    <p>
     <form id="back" action="#" th:action="@{/home/showlist}" method="GET"></form>
     <table style="width:100%;">
         <tr>

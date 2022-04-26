@@ -1,5 +1,6 @@
 package com.pet.littlecrm.model;
 
+import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -9,6 +10,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "message")
+@Data
 public class Message implements Serializable {
     @Id
     @SequenceGenerator(
@@ -32,6 +34,14 @@ public class Message implements Serializable {
     public String content;
     @Column(name = "topic")
     public String topic;
+
+    @ManyToOne
+    @JoinColumn(name = "receiver", referencedColumnName = "login", insertable = false, updatable = false)
+    private Person personReceiver;
+
+    @ManyToOne
+    @JoinColumn(name = "author", referencedColumnName = "login", insertable = false, updatable = false)
+    private Person personAuthor;
 
     public Message(Long id, String author, LocalDate date, String receiver, Date duedate, String content, String topic) {
         this.id = id;
