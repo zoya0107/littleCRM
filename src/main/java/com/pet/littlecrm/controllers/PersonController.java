@@ -78,7 +78,7 @@ public class PersonController {
     public String addPerson(@ModelAttribute("person") Person person, Model model) {
         personService.savePerson(person);
         return "redirect:/home/showlist/{login}";
-    }//!
+    }
 
     @GetMapping("/showlist/{login}")
     @PreAuthorize("hasAuthority('people:read')")
@@ -101,10 +101,10 @@ public class PersonController {
         return "update";
     }
 
-    @GetMapping("/delete/{id}")
+    @GetMapping("/{login}/delete/{id}")
     @PreAuthorize("hasAuthority('people:write')")
     public String deletePerson(@PathVariable(value = "id") Long id, Model model) {
         personService.deletePersonById(id);
-        return "redirect:/home/showlist";
-    }
+        return "redirect:/home/showlist/{login}";
+    }//!
 }
