@@ -12,12 +12,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 @Controller
-@RequestMapping(path="/home")
+@RequestMapping(path = "/home")
 public class PersonController {
     private final PersonService personService;
     private final MessageService messageService;
@@ -35,23 +36,27 @@ public class PersonController {
         return "home";
     }
 
-    @GetMapping("/createmessageform")
+    @GetMapping("/createmessageform/{login}")
     @PreAuthorize("hasAuthority('people:read')")
-    public String getNewMessagePage(Model model) {
+    public String getNewMessagePage(@PathVariable(value = "login") String login, Model model) {
+        Person person = personService.getPersonByLogin(login);
+        model.addAttribute("person", person);
         model.addAttribute("message", new Message());
         return "newmessage";
     }
 
-    @PostMapping("/createmessage")
+    @PostMapping("/createmessage/{login}")
     @PreAuthorize("hasAuthority('people:read')")
-    public String createNewMessage(@ModelAttribute("message") Message message) {
+    public String createNewMessage(@PathVariable(value = "login") String login, @ModelAttribute("message") Message message) {
+        message.setAuthor(personService.getPersonByLogin(login).getFirstname());
+        message.setDate(LocalDate.now());
         messageService.saveMessage(message);
         return "redirect:/home";
     }
 
     @GetMapping("/showmessage/{id}")
     @PreAuthorize("hasAuthority('people:read')")
-    public String showMessage(@PathVariable (value="id") Long id, Model model) {
+    public String showMessage(@PathVariable(value = "id") Long id, Model model) {
         Message message = messageService.getMessageById(id);
         model.addAttribute("message", message);
         return "read";
@@ -84,7 +89,7 @@ public class PersonController {
 
     @GetMapping("/update/{id}")
     @PreAuthorize("hasAuthority('people:write')")
-    public String showUpdateForm(@PathVariable (value="id") Long id, Model model) {
+    public String showUpdateForm(@PathVariable(value = "id") Long id, Model model) {
         Person person = personService.getPersonById(id);
         model.addAttribute("person", person);
         List<Role> roleOptions = new ArrayList<Role>(Arrays.asList(Role.values()));
@@ -96,7 +101,7 @@ public class PersonController {
 
     @GetMapping("/delete/{id}")
     @PreAuthorize("hasAuthority('people:write')")
-    public String deletePerson(@PathVariable (value="id") Long id, Model model) {
+    public String deletePerson(@PathVariable(value = "id") Long id, Model model) {
         personService.deletePersonById(id);
         return "redirect:/home/showlist";
     }

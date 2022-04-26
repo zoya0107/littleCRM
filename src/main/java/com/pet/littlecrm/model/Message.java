@@ -1,11 +1,15 @@
 package com.pet.littlecrm.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
-@Table (name = "message")
-public class Message {
+@Table(name = "message")
+public class Message implements Serializable {
     @Id
     @SequenceGenerator(
             name = "order_sequence",
@@ -17,25 +21,23 @@ public class Message {
             generator = "order_sequence"
     )
     public Long id;
-    @Column(name="author")
+    @Column(name = "author")
     public String author;
-    @Column(name="date")
+    @Column(name = "date")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     public LocalDate date;
-    @Column(name="receiver")
+    @Column(name = "receiver")
     public String receiver;
-    @Column(name="duedate")
-    public LocalDate duedate;
-    @Column(name= "content")
+    @Column(name = "content")
     public String content;
-    @Column(name="topic")
+    @Column(name = "topic")
     public String topic;
 
-    public Message(Long id, String author, LocalDate date, String receiver, LocalDate duedate, String content, String topic) {
+    public Message(Long id, String author, LocalDate date, String receiver, Date duedate, String content, String topic) {
         this.id = id;
         this.author = author;
         this.date = date;
         this.receiver = receiver;
-        this.duedate = duedate;
         this.content = content;
         this.topic = topic;
     }
@@ -60,7 +62,7 @@ public class Message {
     }
 
     public LocalDate getDate() {
-        return LocalDate.now();
+        return date;
     }
 
     public void setDate(LocalDate date) {
@@ -73,14 +75,6 @@ public class Message {
 
     public void setReceiver(String receiver) {
         this.receiver = receiver;
-    }
-
-    public LocalDate getDueDate() {
-        return duedate;
-    }
-
-    public void setDueDate(LocalDate duedate) {
-        this.duedate = duedate;
     }
 
     public String getContent() {
