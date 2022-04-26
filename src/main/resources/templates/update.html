@@ -3,7 +3,8 @@
 <head>
     <title>Update Person</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css">
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/yeti/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootlint@1.1.0/dist/browser/bootlint.min.js"></script>
@@ -15,7 +16,8 @@
     <h1>Management System</h1>
     <hr>
     <h2>Update personal data</h2>
-    <form id="update" action="#" th:action="@{/home/add}" th:object="${person}" method="POST">
+    <form id="update" action="#" th:action="@{/home/{login}/add/(login=${#request.remoteUser})}" th:object="${person}"
+          method="POST">
         <input type="hidden" th:field="*{id}"/>
         <label for="firstname">Firstname: </label>
         <input id="firstname" type="text" th:field="*{firstname}" class="form-control mb-4 col-4" style="width:250px;">
@@ -39,7 +41,7 @@
         </select>
     </form>
     <p>
-    <form id="back" action="#" th:action="@{/home/showlist}" method="GET"></form>
+    <form id="back" action="#" th:action="@{/home/showlist/{login}(login=${#request.remoteUser})}" method="GET"></form>
     <table style="width:100%;">
         <tr>
             <td style="text-align: left;">
