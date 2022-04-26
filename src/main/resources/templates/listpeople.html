@@ -35,7 +35,7 @@
             <td th:text="${person.status}"></td>
             <td>
                 <a th:href="@{/home/update/{id}(id=${person.id})}" class="btn btn-primary">Update</a>
-                <a th:href="@{/home/delete/{id}(id=${person.id})}" class="btn btn-primary">Delete</a>
+                <a th:href="@{/home/delete/{id}(id=${person.id})}" style="background-color: red" class="btn btn-primary">Delete</a>
             </td>
         </tr>
         </tbody>

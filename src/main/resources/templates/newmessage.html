@@ -12,8 +12,12 @@
     <h1>CRM System</h1>
     <hr>
     <h2>New message</h2>
-    <form id="create" action="#" th:action="@{/home/createmessage}" th:object="${message}" method="POST">
+    <form id="create" action="#" th:action="@{/home/createmessage/{login}(login=${#request.remoteUser})}" th:object="${message}" method="POST">
         <div>
+            <label>
+                <input type="text" style="width:200px;" th:field="${person.firstname}" placeholder="Author"
+                       class="form-control mb-4 col-4" readonly="readonly">
+            </label>
             <label>
                 <input type="text" style="width:200px;" th:field="*{receiver}" placeholder="Receiver"
                        class="form-control mb-4 col-4">
@@ -22,11 +26,6 @@
                 <input type="text" style="width:200px;" th:field="*{topic}" placeholder="Topic"
                        class="form-control mb-4 col-4">
             </label>
-        </div>
-        <div>
-            <label for="duedate">Due date: </label>
-            <input type="datetime-local" style="width:200px;" th:date="*{duedate}" id="duedate"
-                   class="form-control mb-4 col-4">
         </div>
         <div>
             <label>

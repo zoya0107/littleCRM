@@ -9,11 +9,11 @@
 </head>
 <body>
 <div class="container">
-    <h1>CRM System</h1>
+    <h1>Welcome to CRM System, [[${#request.remoteUser}]]</h1>
     <hr>
-    <a th:href="@{/home/createmessageform}" class="btn btn-primary">New message</a>
+    <a th:href="@{/home/createmessageform/{login}(login=${#request.remoteUser})}" class="btn btn-primary">New message</a>
     <a th:href="@{/home/showlist}" class="btn btn-primary">Users</a>
-    <a th:href="@{/logout}" class="btn btn-primary">Exit</a>
+    <a th:href="@{/logout}" style="background-color: red" class="btn btn-primary">Exit</a>
     <hr>
     <table class="table table-striped table-responsive-md">
         <thead>
@@ -22,16 +22,15 @@
             <th>Topic</th>
             <th>Author</th>
             <th>Date</th>
-            <th>Due date</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="message : ${listMessages}">
+        <tr th:each="message : ${listMessages}" th:if="${message.receiver} == ${#request.remoteUser}">
             <td th:text="${message.id}"></td>
             <td th:text="${message.topic}"></td>
             <td th:text="${message.author}"></td>
+<!--            <td th:text="${person.surname}${person.firstname}"></td>-->
             <td th:text="${message.date}"></td>
-            <td th:text="${message.duedate}"></td>
             <td>
                 <a th:href="@{/home/showmessage/{id}(id=${message.id})}" class="btn btn-primary">Read</a>
             </td>

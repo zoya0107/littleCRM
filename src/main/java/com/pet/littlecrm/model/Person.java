@@ -3,11 +3,12 @@ package com.pet.littlecrm.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
-@Table (name = "person")
+@Table(name = "person")
 @Data
-public class Person {
+public class Person implements Serializable {
 
     @Id
     @SequenceGenerator(
@@ -21,19 +22,19 @@ public class Person {
     )
     public Long id;
 
-    @Column(name="firstname")
+    @Column(name = "firstname")
     public String firstname;
-    @Column(name= "surname")
+    @Column(name = "surname")
     public String surname;
-    @Column(name="login")
+    @Column(name = "login")
     public String login;
-    @Column(name="password")
+    @Column(name = "password")
     public String password;
     @Enumerated(value = EnumType.STRING)
-    @Column(name="role")
+    @Column(name = "role")
     private Role role;
     @Enumerated(value = EnumType.STRING)
-    @Column(name="status")
+    @Column(name = "status")
     private Status status;
 
     public Person() {
