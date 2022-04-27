@@ -5,8 +5,10 @@ import com.pet.littlecrm.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class TaskService {
@@ -18,7 +20,9 @@ public class TaskService {
     }
 
     public List<Task> getTasks() {
-        return taskRepository.findAll();
+        return taskRepository.findAll().stream()
+                .sorted(Comparator.comparing(Task::getDate).reversed())
+                .collect(Collectors.toList());
     }
 
     public void saveTask(Task task) {

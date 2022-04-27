@@ -1,12 +1,15 @@
 package com.pet.littlecrm.service;
 
 import com.pet.littlecrm.model.Message;
+import com.pet.littlecrm.model.Task;
 import com.pet.littlecrm.repository.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class MessageService {
@@ -18,7 +21,9 @@ public class MessageService {
     }
 
     public List<Message> getMessages() {
-        return messageRepository.findAll();
+        return messageRepository.findAll().stream()
+                .sorted(Comparator.comparing(Message::getDate).reversed())
+                .collect(Collectors.toList());
     }
 
     public void saveMessage(Message message) {
