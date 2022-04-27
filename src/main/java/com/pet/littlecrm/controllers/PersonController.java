@@ -1,11 +1,9 @@
 package com.pet.littlecrm.controllers;
 
-import com.pet.littlecrm.model.Message;
-import com.pet.littlecrm.model.Person;
-import com.pet.littlecrm.model.Role;
-import com.pet.littlecrm.model.Status;
+import com.pet.littlecrm.model.*;
 import com.pet.littlecrm.service.MessageService;
 import com.pet.littlecrm.service.PersonService;
+import com.pet.littlecrm.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -22,19 +20,26 @@ import java.util.List;
 public class PersonController {
     private final PersonService personService;
     private final MessageService messageService;
+    private final TaskService taskService;
 
     @Autowired
-    public PersonController(PersonService personService, MessageService messageService) {
+    public PersonController(PersonService personService, MessageService messageService, TaskService taskService) {
         this.personService = personService;
         this.messageService = messageService;
+        this.taskService = taskService;
     }
+
+    //main
 
     @GetMapping
     @PreAuthorize("hasAuthority('people:read')")
     public String getHomePage(Model model) {
         model.addAttribute("listMessages", messageService.getMessages());
+        model.addAttribute("listTasks", taskService.getTasks());
         return "home";
     }
+
+    //for messages
 
     @GetMapping("/{login}/createmessageform/")
     @PreAuthorize("hasAuthority('people:read')")
@@ -61,6 +66,8 @@ public class PersonController {
         model.addAttribute("message", message);
         return "read";
     }
+
+    //for people
 
     @GetMapping("/createpersonform")
     @PreAuthorize("hasAuthority('people:write')")
@@ -106,5 +113,33 @@ public class PersonController {
     public String deletePerson(@PathVariable(value = "id") Long id, Model model) {
         personService.deletePersonById(id);
         return "redirect:/home/showlist/{login}";
-    }//!
+    }
+
+    //for tasks
+
+    @GetMapping("/{login}/createtaskform/")
+    @PreAuthorize("hasAuthority('people:read')")
+    public String getNewTaskPage(@PathVariable(value = "login") String login, Model model) {
+        Person person = personService.getPersonByLogin(login);
+        model.addAttribute("person", person);
+        model.addAttribute("task", new Task());
+        return "newtask";
+    }
+
+    @PostMapping("/createtask/{login}")
+    @PreAuthorize("hasAuthority('people:read')")
+    public String createNewTask(@PathVariable(value = "login") String login, @ModelAttribute("task") Task task) {
+        task.setAuthor(login);
+        task.setDate(LocalDate.now());
+        taskService.saveTask(task);
+        return "redirect:/home";
+    }
+
+    @GetMapping("/showtask/{id}")
+    @PreAuthorize("hasAuthority('people:read')")
+    public String showTask(@PathVariable(value = "id") Long id, Model model) {
+        Task task = taskService.getTaskById(id);
+        model.addAttribute("task", task);
+        return "readt";
+    }
 }

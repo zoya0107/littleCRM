@@ -30,9 +30,8 @@ public class MessageService {
         Message message = null;
         if (optional.isPresent()) {
             message = optional.get();
-        }
-        else {
-            throw new RuntimeException("There is no order with id " + id);
+        } else {
+            throw new RuntimeException("There is no message with id " + id);
         }
         return message;
     }
