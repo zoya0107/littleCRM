@@ -8,9 +8,9 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "message")
+@Table(name = "task")
 @Data
-public class Message implements Serializable {
+public class Task implements Serializable {
     @Id
     @SequenceGenerator(
             name = "order_sequence",
@@ -27,12 +27,17 @@ public class Message implements Serializable {
     @Column(name = "date")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     public LocalDate date;
+    @Column(name = "duedate")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    public LocalDate duedate;
     @Column(name = "receiver")
     public String receiver;
     @Column(name = "content")
     public String content;
     @Column(name = "topic")
     public String topic;
+    @Column(name = "urgency")
+    public boolean urgent;
 
     @ManyToOne
     @JoinColumn(name = "receiver", referencedColumnName = "login", insertable = false, updatable = false)
@@ -42,16 +47,18 @@ public class Message implements Serializable {
     @JoinColumn(name = "author", referencedColumnName = "login", insertable = false, updatable = false)
     private Person personAuthor;
 
-    public Message(Long id, String author, LocalDate date, String receiver, String content, String topic) {
+    public Task(Long id, String author, LocalDate date, LocalDate duedate, String receiver, String content, String topic, boolean urgent) {
         this.id = id;
         this.author = author;
         this.date = date;
+        this.duedate = duedate;
         this.receiver = receiver;
         this.content = content;
         this.topic = topic;
+        this.urgent = urgent;
     }
 
-    public Message() {
+    public Task() {
     }
 
     public Long getId() {
@@ -78,6 +85,14 @@ public class Message implements Serializable {
         this.date = date;
     }
 
+    public LocalDate getDuedate() {
+        return duedate;
+    }
+
+    public void setDuedate(LocalDate duedate) {
+        this.duedate = duedate;
+    }
+
     public String getReceiver() {
         return receiver;
     }
@@ -100,5 +115,13 @@ public class Message implements Serializable {
 
     public void setTopic(String topic) {
         this.topic = topic;
+    }
+
+    public boolean isUrgent() {
+        return urgent;
+    }
+
+    public void setUrgent(boolean urgent) {
+        this.urgent = urgent;
     }
 }
