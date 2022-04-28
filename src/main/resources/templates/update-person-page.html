@@ -16,7 +16,7 @@
     <h1>Management System</h1>
     <hr>
     <h2>Update personal data</h2>
-    <form id="update" action="#" th:action="@{/home/{login}/add/(login=${#request.remoteUser})}" th:object="${person}"
+    <form id="update" action="#" th:action="@{/person/save}" th:object="${person}"
           method="POST">
         <input type="hidden" th:field="*{id}"/>
         <label for="firstname">Firstname: </label>
@@ -41,7 +41,7 @@
         </select>
     </form>
     <p>
-    <form id="back" action="#" th:action="@{/home/showlist/{login}(login=${#request.remoteUser})}" method="GET"></form>
+    <form id="back" action="#" th:action="@{/person/showlist}" method="GET"></form>
     <table style="width:100%;">
         <tr>
             <td style="text-align: left;">
