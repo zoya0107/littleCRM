@@ -15,7 +15,7 @@
     <h1>CRM System</h1>
     <hr>
     <h2>New message</h2>
-    <form id="create" action="#" th:action="@{/home/createmessage/{login}(login=${#request.remoteUser})}" th:object="${message}" method="POST">
+    <form id="create" action="#" th:action="@{/message/save}" th:object="${message}" method="POST">
         <div>
             <label>
                 <input type="text" style="width:200px;" th:field="${person.firstname}" placeholder="Author"

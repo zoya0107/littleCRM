@@ -11,14 +11,14 @@ import java.util.Collection;
 import java.util.List;
 
 @Data
-public class SecurityPerson implements UserDetails {
+public class PersonSecurity implements UserDetails {
 
     private final String login;
     private final String password;
     private final List<SimpleGrantedAuthority> authorities;
     private final boolean isActive;
 
-    public SecurityPerson(String login, String password, List<SimpleGrantedAuthority> authorities, boolean isActive) {
+    public PersonSecurity(String login, String password, List<SimpleGrantedAuthority> authorities, boolean isActive) {
         this.login = login;
         this.password = password;
         this.authorities = authorities;

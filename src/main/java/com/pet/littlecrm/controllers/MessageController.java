@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 
 @Controller
-@RequestMapping(path = "/home")
+@RequestMapping(path = "/message")
 public class MessageController {
     private final PersonService personService;
     private final MessageService messageService;
@@ -27,29 +27,29 @@ public class MessageController {
         this.personDetailsService = personDetailsService;
     }
 
-    @GetMapping("/create/message")
+    @GetMapping("/create")
     @PreAuthorize("hasAuthority('people:read')")
     public String createNewMessage(Model model) {
         Person person = personService.getPersonByLogin(personDetailsService.getCurrentPerson());
         model.addAttribute("person", person);
         model.addAttribute("message", new Message());
-        return "newmessage";
+        return "create-message-page";
     }
 
-    @PostMapping("{login}/save/message")
+    @PostMapping("/save")
     @PreAuthorize("hasAuthority('people:read')")
-    public String saveNewMessage(@PathVariable(value = "login") String login, @ModelAttribute("message") Message message) {
-        message.setAuthor(login);
+    public String saveNewMessage(@ModelAttribute("message") Message message) {
+        message.setAuthor(personDetailsService.getCurrentPerson());
         message.setDate(LocalDate.now());
         messageService.saveMessage(message);
         return "redirect:/home";
     }
 
-    @GetMapping("/show/message/{id}")
+    @GetMapping("/show/{id}")
     @PreAuthorize("hasAuthority('people:read')")
     public String showMessage(@PathVariable(value = "id") Long id, Model model) {
         Message message = messageService.getMessageById(id);
         model.addAttribute("message", message);
-        return "read";
+        return "message-page";
     }
 }

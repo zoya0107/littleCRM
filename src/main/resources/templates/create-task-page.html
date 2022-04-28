@@ -16,7 +16,7 @@
     <h1>CRM System</h1>
     <hr>
     <h2>New task</h2>
-    <form id="create" action="#" th:action="@{/home/createtask/{login}(login=${#request.remoteUser})}"
+    <form id="create" action="#" th:action="@{/task/save}"
           th:object="${task}" method="POST">
         <div>
             <label>
@@ -35,9 +35,8 @@
                 <input type="text" style="width:200px;" th:field="*{duedate}" placeholder="Due date"
                        class="form-control mb-4 col-4">
             </label>
-            <label>
-                <input type="text" style="width:200px;" th:field="*{urgent}" placeholder="Urgency"
-                       class="form-control mb-4 col-4">
+            <label th:for="${#ids.next('urgent')}">Urgency
+                <input type="checkbox" th:field="*{urgent}"/>
             </label>
         </div>
         <div>

@@ -22,7 +22,7 @@ public class PersonDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
         Person person = personRepository.findPeopleByLogin(login).orElseThrow(() -> new UsernameNotFoundException("User doesn't exist"));
-        return SecurityPerson.fromPerson(person);
+        return PersonSecurity.fromPerson(person);
     }
 
     public String getCurrentPerson() {

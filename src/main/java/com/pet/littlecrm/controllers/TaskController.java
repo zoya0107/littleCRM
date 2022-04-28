@@ -2,6 +2,7 @@ package com.pet.littlecrm.controllers;
 
 import com.pet.littlecrm.model.Person;
 import com.pet.littlecrm.model.Task;
+import com.pet.littlecrm.security.PersonDetailsServiceImpl;
 import com.pet.littlecrm.service.PersonService;
 import com.pet.littlecrm.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,40 +14,42 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 
 @Controller
-@RequestMapping(path = "/home")
+@RequestMapping(path = "/task")
 public class TaskController {
     private final PersonService personService;
     private final TaskService taskService;
+    private final PersonDetailsServiceImpl personDetailsService;
 
     @Autowired
-    public TaskController(PersonService personService, TaskService taskService) {
+    public TaskController(PersonService personService, TaskService taskService, PersonDetailsServiceImpl personDetailsService) {
         this.personService = personService;
         this.taskService = taskService;
+        this.personDetailsService = personDetailsService;
     }
 
-    @GetMapping("/{login}/create/task")
+    @GetMapping("/create")
     @PreAuthorize("hasAuthority('people:read')")
-    public String createNewTask(@PathVariable(value = "login") String login, Model model) {
-        Person person = personService.getPersonByLogin(login);
+    public String createNewTask(Model model) {
+        Person person = personService.getPersonByLogin(personDetailsService.getCurrentPerson());
         model.addAttribute("person", person);
         model.addAttribute("task", new Task());
-        return "newtask";
+        return "create-task-page";
     }
 
-    @PostMapping("{login}/save/task")
+    @PostMapping("/save")
     @PreAuthorize("hasAuthority('people:read')")
-    public String saveNewTask(@PathVariable(value = "login") String login, @ModelAttribute("task") Task task) {
-        task.setAuthor(login);
+    public String saveNewTask(@ModelAttribute("task") Task task) {
+        task.setAuthor(personDetailsService.getCurrentPerson());
         task.setDate(LocalDate.now());
         taskService.saveTask(task);
         return "redirect:/home";
     }
 
-    @GetMapping("/show/task/{id}")
+    @GetMapping("/show/{id}")
     @PreAuthorize("hasAuthority('people:read')")
     public String showTask(@PathVariable(value = "id") Long id, Model model) {
         Task task = taskService.getTaskById(id);
         model.addAttribute("task", task);
-        return "readt";
+        return "task-page";
     }
 }

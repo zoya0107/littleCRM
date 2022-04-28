@@ -16,7 +16,7 @@
     <h1>Management System</h1>
     <hr>
     <h2>Add new person</h2>
-    <form action="#" th:action="@{/home/{login}/add/(login=${#request.remoteUser})}" th:object="${person}"
+    <form action="#" th:action="@{/person/save}" th:object="${person}"
           method="POST">
         <label>
             <input type="text" th:field="*{firstname}" placeholder="Firstname" class="form-control mb-4 col-4">
@@ -44,7 +44,7 @@
         <p></p>
         <button type="submit" class="btn btn-info col-2">Save person</button>
     </form>
-    <a th:href="@{/home}" class="btn btn-primary">Back</a>
+    <a th:href="@{/person/showlist}" class="btn btn-primary">Back</a>
 </div>
 </body>
 </html>

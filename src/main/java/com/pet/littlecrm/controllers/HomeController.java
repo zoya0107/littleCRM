@@ -26,6 +26,6 @@ public class HomeController {
     public String getHomePage(Model model) {
         model.addAttribute("listMessages", messageService.getMessages());
         model.addAttribute("listTasks", taskService.getTasks());
-        return "home";
+        return "home-page";
     }
 }

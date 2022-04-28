@@ -15,11 +15,11 @@
 <div class="container">
     <h1>Welcome to CRM System, [[${#request.remoteUser}]]</h1>
     <hr>
-    <a th:href="@{/home/{login}/create/message/(login=${#request.remoteUser})}" class="btn btn-primary">New
+    <a th:href="@{/message/create}" class="btn btn-primary">New
         message</a>
-    <a th:href="@{/home/{login}/createtaskform/(login=${#request.remoteUser})}" class="btn btn-primary">New
+    <a th:href="@{task/create}" class="btn btn-primary">New
         task</a>
-    <a th:href="@{/home/showlist/{login}(login=${#request.remoteUser})}" class="btn btn-primary">Users</a>
+    <a th:href="@{/person/showlist}" class="btn btn-primary">Users</a>
     <a th:href="@{/logout}" style="background-color: indianred" class="btn btn-primary">Exit</a>
     <hr>
 
@@ -50,7 +50,7 @@
                     <td th:text="${message.topic}"></td>
                     <td th:text="${message.date}"></td>
                     <td>
-                        <a th:href="@{/home/showmessage/{id}(id=${message.id})}" class="btn btn-primary">Read</a>
+                        <a th:href="@{/message/show/{id}(id=${message.id})}" class="btn btn-primary">Read</a>
                     </td>
                 </tr>
                 </tbody>
@@ -77,14 +77,14 @@
                     <td th:text="${task.duedate}"></td>
                     <td align="center" th:text="${task.urgent} ? '&#128681;' : ''"></td>
                     <td>
-                        <a th:href="@{/home/showtask/{id}(id=${task.id})}" class="btn btn-primary">Read</a>
+                        <a th:href="@{/task/show/{id}(id=${task.id})}" class="btn btn-primary">Read</a>
                     </td>
                 </tr>
                 </tbody>
             </table>
         </div>
     </div>
-    <div id="sent_messages_tasks" class="tabcontent">
+    <div id="sent_messages_tasks" class="tabcontent" style="display:none;">
         <h3>Sent</h3>
         <hr>
         <div style="float:left;">
@@ -104,7 +104,7 @@
                     <td th:text="${message.topic}"></td>
                     <td th:text="${message.date}"></td>
                     <td>
-                        <a th:href="@{/home/showmessage/{id}(id=${message.id})}" class="btn btn-primary">Read</a>
+                        <a th:href="@{/message/show/{id}(id=${message.id})}" class="btn btn-primary">Read</a>
                     </td>
                 </tr>
                 </tbody>
@@ -131,7 +131,7 @@
                     <td th:text="${task.duedate}"></td>
                     <td align="center" th:text="${task.urgent} ? '&#128681;' : ''"></td>
                     <td>
-                        <a th:href="@{/home/showtask/{id}(id=${task.id})}" class="btn btn-primary">Read</a>
+                        <a th:href="@{/task/show/{id}(id=${task.id})}" class="btn btn-primary">Read</a>
                     </td>
                 </tr>
                 </tbody>

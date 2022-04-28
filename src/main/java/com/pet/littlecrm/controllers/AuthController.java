@@ -10,12 +10,12 @@ public class AuthController {
 
     @GetMapping("/login")
     public String getLoginPage() {
-        return "login";
+        return "login-page";
     }
 
     @GetMapping("/success")
     public String getSuccessPage() {
-        return "home";
+        return "home-page";
     }
 
 }
