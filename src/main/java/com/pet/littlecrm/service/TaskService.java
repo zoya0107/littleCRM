@@ -21,7 +21,7 @@ public class TaskService {
 
     public List<Task> getTasks() {
         return taskRepository.findAll().stream()
-                .sorted(Comparator.comparing(Task::getDate).reversed())
+                .sorted(Comparator.comparing(Task::getId).reversed())
                 .collect(Collectors.toList());
     }
 

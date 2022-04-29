@@ -5,8 +5,10 @@ import com.pet.littlecrm.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class PersonService {
@@ -18,7 +20,9 @@ public class PersonService {
     }
 
     public List<Person> getPeople() {
-        return personRepository.findAll();
+        return personRepository.findAll().stream()
+                .sorted(Comparator.comparing(Person::getSurname).thenComparing(Person::getFirstname))
+                .collect(Collectors.toList());
     }
 
     public void savePerson(Person person) {

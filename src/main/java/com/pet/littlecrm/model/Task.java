@@ -38,6 +38,11 @@ public class Task implements Serializable {
     public String topic;
     @Column(name = "urgency")
     public boolean urgent;
+    @Column(name = "solution")
+    public String solution;
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "completion")
+    public Completion completion;
 
     @ManyToOne
     @JoinColumn(name = "receiver", referencedColumnName = "login", insertable = false, updatable = false)
@@ -47,7 +52,7 @@ public class Task implements Serializable {
     @JoinColumn(name = "author", referencedColumnName = "login", insertable = false, updatable = false)
     private Person personAuthor;
 
-    public Task(Long id, String author, LocalDate date, LocalDate duedate, String receiver, String content, String topic, boolean urgent) {
+    public Task(Long id, String author, LocalDate date, LocalDate duedate, String receiver, String content, String topic, boolean urgent, String solution, Completion completion) {
         this.id = id;
         this.author = author;
         this.date = date;
@@ -56,6 +61,8 @@ public class Task implements Serializable {
         this.content = content;
         this.topic = topic;
         this.urgent = urgent;
+        this.solution = solution;
+        this.completion = completion;
     }
 
     public Task() {
@@ -123,5 +130,21 @@ public class Task implements Serializable {
 
     public void setUrgent(boolean urgent) {
         this.urgent = urgent;
+    }
+
+    public String getSolution() {
+        return solution;
+    }
+
+    public void setSolution(String solution) {
+        this.solution = solution;
+    }
+
+    public Completion getCompletion() {
+        return completion;
+    }
+
+    public void setCompletion(Completion completion) {
+        this.completion = completion;
     }
 }

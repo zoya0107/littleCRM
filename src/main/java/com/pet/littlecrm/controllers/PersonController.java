@@ -38,7 +38,7 @@ public class PersonController {
 
     @PostMapping("/save")
     @PreAuthorize("hasAuthority('people:write')")
-    public String saveNewPerson(@ModelAttribute("person") Person person, Model model) {
+    public String saveNewPerson(@ModelAttribute("person") Person person) {
         personService.savePerson(person);
         return "redirect:/person/showlist";
     }
