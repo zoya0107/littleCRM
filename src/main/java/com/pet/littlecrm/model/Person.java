@@ -1,5 +1,6 @@
 package com.pet.littlecrm.model;
 
+import com.pet.littlecrm.annotation.UniqueLogin;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
@@ -41,10 +42,11 @@ public class Person implements Serializable {
     @NotEmpty(message = "Login is required")
     @Length(min = 2, max = 50, message = "Login length should be between 2 and 50 characters")
     @Pattern(regexp = "[a-zA-Z0-9]*", message = "Login should contain alpha characters and/or numbers only")
+    @UniqueLogin
     @Column(name = "login")
     public String login;
 
-    @NotEmpty(message = "Password should not be empty")
+    @NotEmpty(message = "Password is required")
     @Length(min = 10, max = 50, message = "Password length should be between 10 and 50 characters")
     @Column(name = "password")
     public String password;
