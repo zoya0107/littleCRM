@@ -30,7 +30,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="person : ${listPeople}">
+        <tr th:each="person : ${listPeople}" th:if="${person.isExistence()==true}">
             <td th:text="${person.surname}"></td>
             <td th:text="${person.firstname}"></td>
             <td th:text="${person.login}"></td>
@@ -39,8 +39,7 @@
             <td>
                 <a th:if="${curperson.role.name()}=='ADMIN'" th:href="@{/person/update/{id}(id=${person.id})}"
                    class="btn btn-primary">Update</a>
-                <a th:if="${curperson.role.name()}=='ADMIN'"
-                   th:href="@{/person/delete/{id}(id=${person.id})}"
+                <a th:if="${curperson.role.name()}=='ADMIN'" th:href="@{/person/delete/{id}(id=${person.id})}"
                    style="background-color: indianred" class="btn btn-primary">Delete</a>
             </td>
         </tr>

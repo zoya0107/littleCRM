@@ -39,6 +39,7 @@ public class PersonController {
     @PostMapping("/save")
     @PreAuthorize("hasAuthority('people:write')")
     public String saveNewPerson(@ModelAttribute("person") Person person) {
+        person.setExistence(true);
         personService.savePerson(person);
         return "redirect:/person/showlist";
     }
@@ -67,7 +68,11 @@ public class PersonController {
     @GetMapping("/delete/{id}")
     @PreAuthorize("hasAuthority('people:write')")
     public String deletePerson(@PathVariable(value = "id") Long id, Model model) {
-        personService.deletePersonById(id);
+        //personService.deletePersonById(id);
+        Person person = personService.getPersonById(id);
+        person.setStatus(Status.BANNED);
+        person.setExistence(false);
+        personService.savePerson(person);
         return "redirect:/person/showlist";
     }
 }

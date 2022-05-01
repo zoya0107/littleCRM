@@ -1,6 +1,9 @@
 package com.pet.littlecrm.model;
 
+import javafx.beans.DefaultProperty;
 import lombok.Data;
+import lombok.experimental.FieldDefaults;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -37,6 +40,8 @@ public class Person implements Serializable {
     @Enumerated(value = EnumType.STRING)
     @Column(name = "status")
     private Status status;
+    @Column(name = "existence")
+    private boolean existence;
 
     @OneToMany(mappedBy = "personReceiver")
     private List<Message> listMessages;
@@ -92,4 +97,27 @@ public class Person implements Serializable {
         this.password = password;
     }
 
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public boolean isExistence() {
+        return existence;
+    }
+
+    public void setExistence(boolean existence) {
+        this.existence = existence;
+    }
 }
