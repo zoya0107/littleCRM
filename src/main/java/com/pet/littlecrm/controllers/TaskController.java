@@ -3,7 +3,7 @@ package com.pet.littlecrm.controllers;
 import com.pet.littlecrm.model.Completion;
 import com.pet.littlecrm.model.Person;
 import com.pet.littlecrm.model.Task;
-import com.pet.littlecrm.security.PersonDetailsServiceImpl;
+import com.pet.littlecrm.security.PersonDetailsService;
 import com.pet.littlecrm.service.PersonService;
 import com.pet.littlecrm.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +19,10 @@ import java.time.LocalDate;
 public class TaskController {
     private final PersonService personService;
     private final TaskService taskService;
-    private final PersonDetailsServiceImpl personDetailsService;
+    private final PersonDetailsService personDetailsService;
 
     @Autowired
-    public TaskController(PersonService personService, TaskService taskService, PersonDetailsServiceImpl personDetailsService) {
+    public TaskController(PersonService personService, TaskService taskService, PersonDetailsService personDetailsService) {
         this.personService = personService;
         this.taskService = taskService;
         this.personDetailsService = personDetailsService;

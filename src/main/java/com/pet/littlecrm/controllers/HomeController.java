@@ -1,7 +1,7 @@
 package com.pet.littlecrm.controllers;
 
 import com.pet.littlecrm.model.Person;
-import com.pet.littlecrm.security.PersonDetailsServiceImpl;
+import com.pet.littlecrm.security.PersonDetailsService;
 import com.pet.littlecrm.service.MessageService;
 import com.pet.littlecrm.service.PersonService;
 import com.pet.littlecrm.service.TaskService;
@@ -18,10 +18,10 @@ public class HomeController {
     private final MessageService messageService;
     private final TaskService taskService;
     private final PersonService personService;
-    private final PersonDetailsServiceImpl personDetailsService;
+    private final PersonDetailsService personDetailsService;
 
     @Autowired
-    public HomeController(MessageService messageService, TaskService taskService, PersonService personService, PersonDetailsServiceImpl personDetailsService) {
+    public HomeController(MessageService messageService, TaskService taskService, PersonService personService, PersonDetailsService personDetailsService) {
         this.messageService = messageService;
         this.taskService = taskService;
         this.personService = personService;

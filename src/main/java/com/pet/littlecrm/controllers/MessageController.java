@@ -2,7 +2,7 @@ package com.pet.littlecrm.controllers;
 
 import com.pet.littlecrm.model.Message;
 import com.pet.littlecrm.model.Person;
-import com.pet.littlecrm.security.PersonDetailsServiceImpl;
+import com.pet.littlecrm.security.PersonDetailsService;
 import com.pet.littlecrm.service.MessageService;
 import com.pet.littlecrm.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +18,10 @@ import java.time.LocalDate;
 public class MessageController {
     private final PersonService personService;
     private final MessageService messageService;
-    private final PersonDetailsServiceImpl personDetailsService;
+    private final PersonDetailsService personDetailsService;
 
     @Autowired
-    public MessageController(PersonService personService, MessageService messageService, PersonDetailsServiceImpl personDetailsService) {
+    public MessageController(PersonService personService, MessageService messageService, PersonDetailsService personDetailsService) {
         this.personService = personService;
         this.messageService = messageService;
         this.personDetailsService = personDetailsService;
