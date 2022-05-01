@@ -1,7 +1,6 @@
 package com.pet.littlecrm.model;
 
 import com.pet.littlecrm.annotation.UniqueLogin;
-import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
@@ -12,7 +11,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "person")
-@Data
 public class Person implements Serializable {
 
     @Id
@@ -136,5 +134,13 @@ public class Person implements Serializable {
 
     public void setExistence(boolean existence) {
         this.existence = existence;
+    }
+
+    public List<Message> getListMessages() {
+        return listMessages;
+    }
+
+    public void setListMessages(List<Message> listMessages) {
+        this.listMessages = listMessages;
     }
 }
