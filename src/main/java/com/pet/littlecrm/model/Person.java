@@ -1,11 +1,11 @@
 package com.pet.littlecrm.model;
 
-import javafx.beans.DefaultProperty;
 import lombok.Data;
-import lombok.experimental.FieldDefaults;
-import org.springframework.boot.context.properties.bind.DefaultValue;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.List;
 
@@ -26,14 +26,29 @@ public class Person implements Serializable {
     )
     public Long id;
 
+    @NotEmpty(message = "Name is required")
+    @Length(min = 2, max = 50, message = "Name length should be between 2 and 50 characters")
+    @Pattern(regexp = "[a-zA-Z]*", message = "Name should contain alpha characters only")
     @Column(name = "firstname")
     public String firstname;
+
+    @NotEmpty(message = "Surname is required")
+    @Length(min = 2, max = 50, message = "Surname length should be between 2 and 50 characters")
+    @Pattern(regexp = "([a-zA-Z]*)", message = "Surname should contain alpha characters only")
     @Column(name = "surname")
     public String surname;
+
+    @NotEmpty(message = "Login is required")
+    @Length(min = 2, max = 50, message = "Login length should be between 2 and 50 characters")
+    @Pattern(regexp = "[a-zA-Z0-9]*", message = "Login should contain alpha characters and/or numbers only")
     @Column(name = "login")
     public String login;
+
+    @NotEmpty(message = "Password should not be empty")
+    @Length(min = 10, max = 50, message = "Password length should be between 10 and 50 characters")
     @Column(name = "password")
     public String password;
+
     @Enumerated(value = EnumType.STRING)
     @Column(name = "role")
     private Role role;
