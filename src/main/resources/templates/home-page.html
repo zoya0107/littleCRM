@@ -83,7 +83,7 @@
                         <div
                                 th:switch="${task.completion.name()}">
                             <p style="color:red;" th:case="'START'">Registered</p>
-                            <p style="color:yellow;" th:case="'DONE'">Completed</p>
+                            <p style="color:blue;" th:case="'DONE'">Completed</p>
                             <p style="color:lime;" th:case="'APPROVED'">Checked</p>
                         </div>
                     </td>
@@ -146,7 +146,7 @@
                         <div
                                 th:switch="${task.completion.name()}">
                             <p style="color:red;" th:case="'START'">Registered</p>
-                            <p style="color:yellow;" th:case="'DONE'">Completed</p>
+                            <p style="color:blue;" th:case="'DONE'">Completed</p>
                             <p style="color:lime;" th:case="'APPROVED'">Checked</p>
                         </div>
                     </td>

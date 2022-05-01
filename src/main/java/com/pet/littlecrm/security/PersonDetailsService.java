@@ -9,13 +9,15 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service("personDetailsServiceImpl")
-public class PersonDetailsServiceImpl implements UserDetailsService {
+public class PersonDetailsService implements UserDetailsService {
 
     private final PersonRepository personRepository;
 
     @Autowired
-    public PersonDetailsServiceImpl(PersonRepository personRepository) {
+    public PersonDetailsService(PersonRepository personRepository) {
         this.personRepository = personRepository;
     }
 
@@ -27,12 +29,15 @@ public class PersonDetailsServiceImpl implements UserDetailsService {
 
     public String getCurrentPerson() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username;
         if (principal instanceof UserDetails) {
-            username = ((UserDetails)principal).getUsername();
+            return ((UserDetails) principal).getUsername();
         } else {
-            username = principal.toString();
+            return principal.toString();
         }
-        return username;
+    }
+
+    public boolean isLoginAlreadyInUse(String login) {
+        Optional<Person> person = personRepository.findPeopleByLogin(login);
+        return person.isPresent();
     }
 }

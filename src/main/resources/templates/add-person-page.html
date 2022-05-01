@@ -18,19 +18,18 @@
     <h2>Add new person</h2>
     <form action="#" th:action="@{/person/save}" th:object="${person}"
           method="POST">
-        <label>
-            <input type="text" th:field="*{firstname}" placeholder="Firstname" class="form-control mb-4 col-4">
-        </label>
-        <label>
-            <input type="text" th:field="*{surname}" placeholder="Surname" class="form-control mb-4 col-4">
-        </label>
-        <label>
-            <input type="text" th:field="*{login}" placeholder="Login" class="form-control mb-4 col-4">
-        </label>
-        <label>
-            <input type="text" th:field="*{password}" placeholder="Password" class="form-control mb-4 col-4">
-        </label>
-        <p></p>
+        <label>Firstname: </label>
+        <input type="text" th:field="*{firstname}" class="form-control mb-4 col-4">
+        <div style="color:red" th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}">Firstname error</div>
+        <label>Surname: </label>
+        <input type="text" th:field="*{surname}" class="form-control mb-4 col-4">
+        <div style="color:red" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">Surname error</div>
+        <label>Login: </label>
+        <input type="text" th:field="*{login}" class="form-control mb-4 col-4">
+        <div style="color:red" th:if="${#fields.hasErrors('login')}" th:errors="*{login}">Login error</div>
+        <label>Password: </label>
+        <input type="text" th:field="*{password}" class="form-control mb-4 col-4">
+        <div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password error</div>
         <label for="role">Role: </label>
         <select class="form-control" id="role" name="role" style="width:200px;">
             <option th:each="role : ${roleoptions}" th:text="${role}" th:value="${role}">
@@ -44,6 +43,7 @@
         <p></p>
         <button type="submit" class="btn btn-info col-2">Save person</button>
     </form>
+    <p></p>
     <a th:href="@{/person/showlist}" class="btn btn-primary">Back</a>
 </div>
 </body>
