@@ -3,7 +3,7 @@ package com.pet.littlecrm.controllers;
 import com.pet.littlecrm.model.Person;
 import com.pet.littlecrm.model.Role;
 import com.pet.littlecrm.model.Status;
-import com.pet.littlecrm.security.PersonDetailsServiceImpl;
+import com.pet.littlecrm.security.PersonDetailsService;
 import com.pet.littlecrm.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,10 +21,10 @@ import java.util.List;
 @RequestMapping(path = "/person")
 public class PersonController {
     private final PersonService personService;
-    private final PersonDetailsServiceImpl personDetailsService;
+    private final PersonDetailsService personDetailsService;
 
     @Autowired
-    public PersonController(PersonService personService, PersonDetailsServiceImpl personDetailsService) {
+    public PersonController(PersonService personService, PersonDetailsService personDetailsService) {
         this.personService = personService;
         this.personDetailsService = personDetailsService;
     }

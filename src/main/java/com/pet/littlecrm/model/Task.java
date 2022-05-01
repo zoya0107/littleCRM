@@ -1,6 +1,5 @@
 package com.pet.littlecrm.model;
 
-import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -9,7 +8,6 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "task")
-@Data
 public class Task implements Serializable {
     @Id
     @SequenceGenerator(
@@ -146,5 +144,21 @@ public class Task implements Serializable {
 
     public void setCompletion(Completion completion) {
         this.completion = completion;
+    }
+
+    public Person getPersonReceiver() {
+        return personReceiver;
+    }
+
+    public void setPersonReceiver(Person personReceiver) {
+        this.personReceiver = personReceiver;
+    }
+
+    public Person getPersonAuthor() {
+        return personAuthor;
+    }
+
+    public void setPersonAuthor(Person personAuthor) {
+        this.personAuthor = personAuthor;
     }
 }
