@@ -16,17 +16,21 @@
     <h1><b>Person card</b></h1>
     <hr>
     <h2>Update personal data</h2>
-    <form id="update" action="#" th:action="@{/person/save}" th:object="${person}"
+    <form id="update" action="#" th:action="@{/person/update}" th:object="${person}"
           method="POST">
         <input type="hidden" th:field="*{id}"/>
         <label for="firstname">Firstname: </label>
         <input id="firstname" type="text" th:field="*{firstname}" class="form-control mb-4 col-4" style="width:250px;">
+        <div style="color:red" th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}">Firstname error</div>
         <label for="surname">Surname: </label>
         <input id="surname" type="text" th:field="*{surname}" class="form-control mb-4 col-4" style="width:250px;">
+        <div style="color:red" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">Surname error</div>
         <label for="login">Login: </label>
-        <input id="login" type="text" th:field="*{login}" class="form-control mb-4 col-4" style="width:250px;">
+        <input id="login" type="text" th:value="*{login}" class="form-control mb-4 col-4" style="width:250px;"
+               readonly="readonly">
         <label for="password">Password: </label>
         <input id="password" type="text" th:field="*{password}" class="form-control mb-4 col-4" style="width:250px;">
+        <div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password error</div>
         <label for="role">Role: </label>
         <select class="form-control" id="role" name="role" style="width:250px;">
             <option th:each="role : ${roleoptions}" th:text="${role}" th:value="${role}"

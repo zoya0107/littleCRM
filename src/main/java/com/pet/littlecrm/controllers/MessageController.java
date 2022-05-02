@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.time.LocalDate;
 
 @Controller
@@ -38,7 +40,12 @@ public class MessageController {
 
     @PostMapping("/save")
     @PreAuthorize("hasAuthority('people:read')")
-    public String saveNewMessage(@ModelAttribute("message") Message message) {
+    public String saveNewMessage(@ModelAttribute("message") @Valid Message message, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            Person person = personService.getPersonByLogin(personDetailsService.getCurrentPerson());
+            model.addAttribute("person", person);
+            return "create-message-page";
+        }
         message.setAuthor(personDetailsService.getCurrentPerson());
         message.setDate(LocalDate.now());
         messageService.saveMessage(message);

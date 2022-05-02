@@ -42,9 +42,28 @@ public class PersonController {
 
     @PostMapping("/save")
     @PreAuthorize("hasAuthority('people:write')")
-    public String saveNewPerson(@ModelAttribute("person") @Valid Person person, BindingResult bindingResult) {
+    public String saveNewPerson(@ModelAttribute("person") @Valid Person person, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+            List<Role> roleOptions = new ArrayList<Role>(Arrays.asList(Role.values()));
+            model.addAttribute("roleoptions", roleOptions);
+            List<Status> statusOptions = new ArrayList<Status>(Arrays.asList(Status.values()));
+            model.addAttribute("statusoptions", statusOptions);
             return "add-person-page";
+        }
+        person.setExistence(true);
+        personService.savePerson(person);
+        return "redirect:/person/showlist";
+    }
+
+    @PostMapping("/update")
+    @PreAuthorize("hasAuthority('people:write')")
+    public String savePerson(@ModelAttribute("person") @Valid Person person, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            List<Role> roleOptions = new ArrayList<Role>(Arrays.asList(Role.values()));
+            model.addAttribute("roleoptions", roleOptions);
+            List<Status> statusOptions = new ArrayList<Status>(Arrays.asList(Status.values()));
+            model.addAttribute("statusoptions", statusOptions);
+            return "update-person-page";
         }
         person.setExistence(true);
         personService.savePerson(person);

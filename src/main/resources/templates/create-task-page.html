@@ -16,25 +16,28 @@
     <h1><b>Task creation</b></h1>
     <hr>
     <h2>New task</h2>
-    <form id="create" action="#" th:action="@{/task/save}"
-          th:object="${task}" method="POST">
+    <form id="create" action="#" th:action="@{/task/save}" th:object="${task}" method="POST">
         <div>
             <label>
-                <input type="text" style="width:200px;" th:field="${person.firstname}" placeholder="Author"
+                <input type="text" style="width:200px;"
+                       th:value="${person.getFirstname()} + ' ' + ${person.getSurname()}"
                        class="form-control mb-4 col-4" readonly="readonly">
             </label>
             <label>
                 <input type="text" style="width:200px;" th:field="*{receiver}" placeholder="Receiver"
                        class="form-control mb-4 col-4">
             </label>
+            <div style="color:red" th:if="${#fields.hasErrors('receiver')}" th:errors="*{receiver}">Receiver error</div>
             <label>
                 <input type="text" style="width:200px;" th:field="*{topic}" placeholder="Topic"
                        class="form-control mb-4 col-4">
             </label>
+            <div style="color:red" th:if="${#fields.hasErrors('topic')}" th:errors="*{topic}">Topic error</div>
             <label>
                 <input type="date" style="width:2000px;" th:field="*{duedate}" placeholder="Due date"
                        class="form-control mb-4 col-4">
             </label>
+            <div style="color:red" th:if="${#fields.hasErrors('duedate')}" th:errors="*{duedate}">Duedate error</div>
             <label th:for="${#ids.next('urgent')}">Urgency
                 <input type="checkbox" th:field="*{urgent}"/>
             </label>
@@ -44,6 +47,7 @@
         <textarea rows="10" cols="45" name="text" th:field="*{content}" placeholder="Content"
                   class="form-control mb-4 col-4"></textarea>
             </label>
+            <div style="color:red" th:if="${#fields.hasErrors('content')}" th:errors="*{content}">Content error</div>
         </div>
     </form>
     <form id="back" action="#" th:action="@{/home}" method="GET"></form>

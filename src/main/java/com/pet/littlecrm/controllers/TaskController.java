@@ -10,8 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.time.LocalDate;
 
 @Controller
@@ -39,11 +41,18 @@ public class TaskController {
 
     @PostMapping("/save")
     @PreAuthorize("hasAuthority('people:read')")
-    public String saveNewTask(@ModelAttribute("task") Task task) {
+    public String saveNewTask(@ModelAttribute("task") @Valid Task task, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            Person person = personService.getPersonByLogin(personDetailsService.getCurrentPerson());
+            model.addAttribute("person", person);
+            return "create-task-page";
+        }
         task.setAuthor(personDetailsService.getCurrentPerson());
         task.setDate(LocalDate.now());
         task.setCompletion(Completion.START);
+        task.setSolution("Enter your solution here");
         taskService.saveTask(task);
+        System.out.println("here");
         return "redirect:/home";
     }
 
@@ -59,7 +68,13 @@ public class TaskController {
 
     @PostMapping("/done")
     @PreAuthorize("hasAuthority('people:read')")
-    public String saveUpdatedTask(@ModelAttribute("task") Task task) {
+    public String saveUpdatedTask(@ModelAttribute("task") @Valid Task task, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            Person person = personService.getPersonByLogin(personDetailsService.getCurrentPerson());
+            model.addAttribute("curperson", person);
+            task.setCompletion(Completion.START); //!!
+            return "task-page";
+        }
         task.setAuthor(task.getAuthor());
         task.setCompletion(Completion.DONE);
         taskService.saveTask(task);

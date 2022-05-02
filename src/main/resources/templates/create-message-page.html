@@ -26,16 +26,19 @@
                 <input type="text" style="width:200px;" th:field="*{receiver}" placeholder="Receiver"
                        class="form-control mb-4 col-4">
             </label>
+            <div style="color:red" th:if="${#fields.hasErrors('receiver')}" th:errors="*{receiver}">Receiver error</div>
             <label>
                 <input type="text" style="width:200px;" th:field="*{topic}" placeholder="Topic"
                        class="form-control mb-4 col-4">
             </label>
+            <div style="color:red" th:if="${#fields.hasErrors('topic')}" th:errors="*{topic}">Topic error</div>
         </div>
         <div>
             <label>
         <textarea rows="10" cols="45" name="text" th:field="*{content}" placeholder="Content"
                   class="form-control mb-4 col-4"></textarea>
             </label>
+            <div style="color:red" th:if="${#fields.hasErrors('content')}" th:errors="*{content}">Content error</div>
         </div>
     </form>
     <form id="back" action="#" th:action="@{/home}" method="GET"></form>

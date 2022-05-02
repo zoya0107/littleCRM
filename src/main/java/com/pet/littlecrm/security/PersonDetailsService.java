@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-@Service("personDetailsServiceImpl")
+@Service("personDetailsService")
 public class PersonDetailsService implements UserDetailsService {
 
     private final PersonRepository personRepository;
@@ -36,7 +36,7 @@ public class PersonDetailsService implements UserDetailsService {
         }
     }
 
-    public boolean isLoginAlreadyInUse(String login) {
+    public Boolean isLoginAlreadyInUse(String login) {
         Optional<Person> person = personRepository.findPeopleByLogin(login);
         return person.isPresent();
     }

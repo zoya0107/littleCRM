@@ -2,18 +2,16 @@ package com.pet.littlecrm.annotation;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
+import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import static java.lang.annotation.ElementType.FIELD;
-import static java.lang.annotation.ElementType.METHOD;
-
-@Constraint(validatedBy = UniqueLoginValidator.class)
+@Constraint(validatedBy = ExistingLoginValidator.class)
 @Retention(RetentionPolicy.RUNTIME)
-@Target({FIELD, METHOD})
-public @interface UniqueLogin {
-    String message() default "This login is already taken";
+@Target({ElementType.FIELD, ElementType.PARAMETER})
+public @interface ExistingLogin {
+    String message() default "There is no such login";
 
     Class<?>[] groups() default {};
 
