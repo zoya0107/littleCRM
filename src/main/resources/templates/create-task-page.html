@@ -12,42 +12,33 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-<div class="container">
+<div class="container col-10">
     <h1><b>Task creation</b></h1>
     <hr>
     <h2>New task</h2>
     <form id="create" action="#" th:action="@{/task/save}" th:object="${task}" method="POST">
         <div>
-            <label>
-                <input type="text" style="width:200px;"
-                       th:value="${person.getFirstname()} + ' ' + ${person.getSurname()}"
-                       class="form-control mb-4 col-4" readonly="readonly">
-            </label>
-            <label>
-                <input type="text" style="width:200px;" th:field="*{receiver}" placeholder="Receiver"
-                       class="form-control mb-4 col-4">
-            </label>
+            <label>Author: </label>
+            <input type="text" style="width:200px;" th:value="${person.getFirstname()} + ' ' + ${person.getSurname()}"
+                   class="form-control mb-4 col-4" readonly="readonly">
+            <label>Receiver's login: </label>
             <div style="color:red" th:if="${#fields.hasErrors('receiver')}" th:errors="*{receiver}">Receiver error</div>
-            <label>
-                <input type="text" style="width:200px;" th:field="*{topic}" placeholder="Topic"
-                       class="form-control mb-4 col-4">
-            </label>
+            <input type="text" style="width:200px;" th:field="*{receiver}" class="form-control mb-4 col-4">
+
+            <label>Topic: </label>
             <div style="color:red" th:if="${#fields.hasErrors('topic')}" th:errors="*{topic}">Topic error</div>
-            <label>
-                <input type="date" style="width:2000px;" th:field="*{duedate}" placeholder="Due date"
-                       class="form-control mb-4 col-4">
-            </label>
+            <input type="text" style="width:200px;" th:field="*{topic}" class="form-control mb-4 col-4">
+            <label>Due date: </label>
             <div style="color:red" th:if="${#fields.hasErrors('duedate')}" th:errors="*{duedate}">Duedate error</div>
+            <input type="date" style="width:200px;" th:field="*{duedate}" class="form-control mb-4 col-4">
             <label th:for="${#ids.next('urgent')}">Urgency
                 <input type="checkbox" th:field="*{urgent}"/>
             </label>
         </div>
         <div>
-            <label>
-        <textarea rows="10" cols="45" name="text" th:field="*{content}" placeholder="Content"
-                  class="form-control mb-4 col-4"></textarea>
-            </label>
+            <label>Content: </label>
             <div style="color:red" th:if="${#fields.hasErrors('content')}" th:errors="*{content}">Content error</div>
+            <textarea rows="10" cols="45" name="text" th:field="*{content}" class="form-control mb-4 col-4"></textarea>
         </div>
     </form>
     <form id="back" action="#" th:action="@{/home}" method="GET"></form>

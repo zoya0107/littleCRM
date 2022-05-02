@@ -72,7 +72,7 @@ public class TaskController {
         if (bindingResult.hasErrors()) {
             Person person = personService.getPersonByLogin(personDetailsService.getCurrentPerson());
             model.addAttribute("curperson", person);
-            task.setCompletion(Completion.START); //!!
+            task.setCompletion(Completion.START);
             return "task-page";
         }
         task.setAuthor(task.getAuthor());

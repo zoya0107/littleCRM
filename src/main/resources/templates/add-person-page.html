@@ -12,24 +12,28 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-<div class="container">
+<div class="container col-10">
     <h1><b>Person adding</b></h1>
     <hr>
     <h2>Add new person</h2>
-    <form action="#" th:action="@{/person/save}" th:object="${person}"
+    <form id="save" action="#" th:action="@{/person/save}" th:object="${person}"
           method="POST">
         <label>Firstname: </label>
-        <input type="text" th:field="*{firstname}" class="form-control mb-4 col-4">
         <div style="color:red" th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}">Firstname error</div>
+        <input type="text" th:field="*{firstname}" class="form-control mb-4 col-4">
+
         <label>Surname: </label>
-        <input type="text" th:field="*{surname}" class="form-control mb-4 col-4">
         <div style="color:red" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">Surname error</div>
+        <input type="text" th:field="*{surname}" class="form-control mb-4 col-4">
+
         <label>Login: </label>
-        <input type="text" th:field="*{login}" class="form-control mb-4 col-4">
         <div style="color:red" th:if="${#fields.hasErrors('login')}" th:errors="*{login}">Login error</div>
+        <input type="text" th:field="*{login}" class="form-control mb-4 col-4">
+
         <label>Password: </label>
-        <input type="text" th:field="*{password}" class="form-control mb-4 col-4">
         <div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password error</div>
+        <input type="text" th:field="*{password}" class="form-control mb-4 col-4">
+
         <label for="role">Role: </label>
         <select class="form-control" id="role" name="role" style="width:200px;">
             <option th:each="role : ${roleoptions}" th:text="${role}" th:value="${role}">
@@ -40,11 +44,23 @@
             <option th:each="status : ${statusoptions}" th:text="${status}" th:value="${status}">
             </option>
         </select>
-        <p></p>
-        <button type="submit" class="btn btn-info col-2">Save person</button>
     </form>
-    <p></p>
-    <a th:href="@{/person/showlist}" class="btn btn-primary">Back</a>
+    <p>
+    <form id="back" action="#" th:action="@{/person/showlist}" method="GET"></form>
+    <table style="width:100%;">
+        <tr>
+            <td style="text-align: left;">
+                <button id="save_button" type="submit" class="btn btn-info col-2">Save person</button>
+            </td>
+            <td style="text-align: right;">
+                <button id="back_button" type="submit" class="btn btn-info col-2" data-icon="back">Back</button>
+            </td>
+        </tr>
+    </table>
 </div>
+<script>
+    document.getElementById('save_button').addEventListener('click', () => document.getElementById('save').submit());
+    document.getElementById('back_button').addEventListener('click', () => document.getElementById('back').submit());
+</script>
 </body>
 </html>
