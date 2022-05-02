@@ -12,12 +12,45 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-<div class="container">
-    <h1><b>Message</b></h1>
+<div class="container col-10">
+    <h1 th:if="${message.author} != ${curperson.login}">
+        <strong th:text="'Message from' + ' ' + ${message.getPersonAuthor().firstname} + ' ' + ${message.getPersonAuthor().surname}"></strong>
+    </h1>
+    <h1 th:if="${message.author} == ${curperson.login}">
+        <strong th:text="'Message from you'"></strong>
+    </h1>
     <hr>
-    <h2>Message content</h2>
-    <p th:text="${message.getContent()}">VALUE</p>
-    <a th:href="@{/home}" class="btn btn-primary">Back</a>
+    <form>
+        <body>
+        <h1>
+            <label>Topic</label>
+            <input type="text" style="font-size:15px;" readonly="readonly"
+                   th:field="${message.topic}" class="form-control mb-4 col-2">
+
+            <label th:if="${message.author} != ${curperson.login}">Sender</label>
+            <input th:if="${message.author} != ${curperson.login}" type="text" style="font-size:15px;"
+                   readonly="readonly"
+                   th:field="${message.author}" class="form-control mb-4 col-2">
+            <label>Message content</label>
+            <br>
+            <textarea data-cke-saved-name=" " rows="10" cols="100" style="font-size:15px;"
+                      readonly="readonly" th:field="${message.content}" class="form-control mb-4 col-6"></textarea>
+        </h1>
+        </body>
+    </form>
+    <p>
+    <form id="back" action="#" th:action="@{/home}" method="GET"></form>
+    <table style="width:100%;">
+        <tr>
+            <td style="text-align: right;">
+                <button id="back_button" type="submit" class="btn btn-info col-2" data-icon="back">Back</button>
+            </td>
+        </tr>
+    </table>
+    <!--    <a th:href="@{/home}" class="btn btn-primary">Back</a>-->
 </div>
+<script>
+    document.getElementById('back_button').addEventListener('click', () => document.getElementById('back').submit());
+</script>
 </body>
 </html>

@@ -55,6 +55,8 @@ public class MessageController {
     @GetMapping("/show/{id}")
     @PreAuthorize("hasAuthority('people:read')")
     public String showMessage(@PathVariable(value = "id") Long id, Model model) {
+        Person person = personService.getPersonByLogin(personDetailsService.getCurrentPerson());
+        model.addAttribute("curperson", person);
         Message message = messageService.getMessageById(id);
         model.addAttribute("message", message);
         return "message-page";

@@ -12,7 +12,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-<div class="container">
+<div class="container col-10">
     <h1><b>Management</b></h1>
     <hr>
     <a th:if="${curperson.role.name()}=='ADMIN'" th:href="@{/person/add}" class="btn btn-primary">Add person</a>
