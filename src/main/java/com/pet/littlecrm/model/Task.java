@@ -1,8 +1,11 @@
 package com.pet.littlecrm.model;
 
+import com.pet.littlecrm.annotation.ExistingLogin;
+import com.pet.littlecrm.annotation.FutureDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.time.LocalDate;
 
@@ -20,19 +23,30 @@ public class Task implements Serializable {
             generator = "order_sequence"
     )
     public Long id;
+
     @Column(name = "author")
     public String author;
+
     @Column(name = "date")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     public LocalDate date;
+
     @Column(name = "duedate")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @FutureDate
     public LocalDate duedate;
+
     @Column(name = "receiver")
+    @ExistingLogin
+    @NotEmpty(message = "Receiver is required")
     public String receiver;
+
     @Column(name = "content")
+    @NotEmpty(message = "Content is required")
     public String content;
+
     @Column(name = "topic")
+    @NotEmpty(message = "Topic is required")
     public String topic;
     @Column(name = "urgency")
     public boolean urgent;

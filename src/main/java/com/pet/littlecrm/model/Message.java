@@ -1,8 +1,10 @@
 package com.pet.littlecrm.model;
 
+import com.pet.littlecrm.annotation.ExistingLogin;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.time.LocalDate;
 
@@ -26,10 +28,14 @@ public class Message implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     public LocalDate date;
     @Column(name = "receiver")
+    @ExistingLogin
+    @NotEmpty(message = "Receiver is required")
     public String receiver;
     @Column(name = "content")
+    @NotEmpty(message = "Content is required")
     public String content;
     @Column(name = "topic")
+    @NotEmpty(message = "Topic is required")
     public String topic;
 
     @ManyToOne
