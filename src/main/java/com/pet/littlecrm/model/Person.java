@@ -1,13 +1,11 @@
 package com.pet.littlecrm.model;
 
-import com.pet.littlecrm.annotation.UniqueLogin;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
-import java.util.List;
 
 @Entity
 @Table(name = "person")
@@ -23,31 +21,24 @@ public class Person implements Serializable {
             strategy = GenerationType.SEQUENCE,
             generator = "user_sequence"
     )
-    public Long id;
+    private Long id;
 
     @NotEmpty(message = "Name is required")
     @Length(min = 2, max = 50, message = "Name length should be between 2 and 50 characters")
     @Pattern(regexp = "[a-zA-Z]*", message = "Name should contain alpha characters only")
     @Column(name = "firstname")
-    public String firstname;
+    private String firstname;
 
     @NotEmpty(message = "Surname is required")
     @Length(min = 2, max = 50, message = "Surname length should be between 2 and 50 characters")
     @Pattern(regexp = "([a-zA-Z]*)", message = "Surname should contain alpha characters only")
     @Column(name = "surname")
-    public String surname;
-
-    @NotEmpty(message = "Login is required")
-    @Length(min = 2, max = 50, message = "Login length should be between 2 and 50 characters")
-    @Pattern(regexp = "[a-zA-Z0-9]*", message = "Login should contain alpha characters and/or numbers only")
-    @UniqueLogin
-    @Column(name = "login")
-    public String login;
+    private String surname;
 
     @NotEmpty(message = "Password is required")
     @Length(min = 10, max = 50, message = "Password length should be between 10 and 50 characters")
     @Column(name = "password")
-    public String password;
+    private String password;
 
     @Enumerated(value = EnumType.STRING)
     @Column(name = "role")
@@ -58,18 +49,26 @@ public class Person implements Serializable {
     @Column(name = "existence")
     private boolean existence;
 
-    @OneToMany(mappedBy = "personReceiver")
-    private List<Message> listMessages;
+    @OneToOne(mappedBy = "person")
+    @JoinColumn(name = "id", referencedColumnName = "id", insertable = false, updatable = false)
+    private PersonLogin personLogin;
 
     public Person() {
     }
 
-    public Person(Long id, String firstname, String surname, String login, String password) {
+    public Person(Long id, String firstname, String surname, String password) {
         this.id = id;
         this.firstname = firstname;
         this.surname = surname;
-        this.login = login;
         this.password = password;
+    }
+
+    public PersonLogin getPersonLogin() {
+        return personLogin;
+    }
+
+    public void setPersonLogin(PersonLogin personLogin) {
+        this.personLogin = personLogin;
     }
 
     public Long getId() {
@@ -94,14 +93,6 @@ public class Person implements Serializable {
 
     public void setSurname(String surname) {
         this.surname = surname;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
     }
 
     public String getPassword() {
@@ -136,11 +127,4 @@ public class Person implements Serializable {
         this.existence = existence;
     }
 
-    public List<Message> getListMessages() {
-        return listMessages;
-    }
-
-    public void setListMessages(List<Message> listMessages) {
-        this.listMessages = listMessages;
-    }
 }

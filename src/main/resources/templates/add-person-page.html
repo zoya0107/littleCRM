@@ -16,8 +16,7 @@
     <h1><b>Person adding</b></h1>
     <hr>
     <h2>Add new person</h2>
-    <form id="save" action="#" th:action="@{/person/save}" th:object="${person}"
-          method="POST">
+    <form id="save" action="#" th:action="@{/person/save}" method="POST" th:object="${person}">
         <label>Firstname: </label>
         <div style="color:red" th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}">Firstname error</div>
         <input type="text" th:field="*{firstname}" class="form-control mb-4 col-4">
@@ -27,8 +26,10 @@
         <input type="text" th:field="*{surname}" class="form-control mb-4 col-4">
 
         <label>Login: </label>
-        <div style="color:red" th:if="${#fields.hasErrors('login')}" th:errors="*{login}">Login error</div>
-        <input type="text" th:field="*{login}" class="form-control mb-4 col-4">
+        <div th:object="${personLogin}">
+            <div style="color:red" th:if="${#fields.hasErrors('login')}" th:errors="*{login}">Login error</div>
+            <input type="text" th:field="*{login}" class="form-control mb-4 col-4">
+        </div>
 
         <label>Password: </label>
         <div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password error</div>
@@ -64,3 +65,4 @@
 </script>
 </body>
 </html>
+<!--th:object="${person}" th:object="${personLogin}-->

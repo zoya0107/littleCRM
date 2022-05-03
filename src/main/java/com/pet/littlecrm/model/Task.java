@@ -22,47 +22,47 @@ public class Task implements Serializable {
             strategy = GenerationType.SEQUENCE,
             generator = "order_sequence"
     )
-    public Long id;
+    private Long id;
 
     @Column(name = "author")
-    public String author;
+    private String author;
 
     @Column(name = "date")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    public LocalDate date;
+    private LocalDate date;
 
     @Column(name = "duedate")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @FutureDate
-    public LocalDate duedate;
+    private LocalDate duedate;
 
     @Column(name = "receiver")
     @ExistingLogin
     @NotEmpty(message = "Receiver is required")
-    public String receiver;
+    private String receiver;
 
     @Column(name = "content")
     @NotEmpty(message = "Content is required")
-    public String content;
+    private String content;
 
     @Column(name = "topic")
     @NotEmpty(message = "Topic is required")
-    public String topic;
+    private String topic;
     @Column(name = "urgency")
-    public boolean urgent;
+    private boolean urgent;
     @Column(name = "solution")
-    public String solution;
+    private String solution;
     @Enumerated(value = EnumType.STRING)
     @Column(name = "completion")
-    public Completion completion;
+    private Completion completion;
 
     @ManyToOne
     @JoinColumn(name = "receiver", referencedColumnName = "login", insertable = false, updatable = false)
-    private Person personReceiver;
+    private PersonLogin receiverPersonLogin;
 
     @ManyToOne
     @JoinColumn(name = "author", referencedColumnName = "login", insertable = false, updatable = false)
-    private Person personAuthor;
+    private PersonLogin authorPersonLogin;
 
     public Task(Long id, String author, LocalDate date, LocalDate duedate, String receiver, String content, String topic, boolean urgent, String solution, Completion completion) {
         this.id = id;
@@ -160,19 +160,19 @@ public class Task implements Serializable {
         this.completion = completion;
     }
 
-    public Person getPersonReceiver() {
-        return personReceiver;
+    public PersonLogin getReceiverPersonLogin() {
+        return receiverPersonLogin;
     }
 
-    public void setPersonReceiver(Person personReceiver) {
-        this.personReceiver = personReceiver;
+    public void setReceiverPersonLogin(PersonLogin receiverPersonLogin) {
+        this.receiverPersonLogin = receiverPersonLogin;
     }
 
-    public Person getPersonAuthor() {
-        return personAuthor;
+    public PersonLogin getAuthorPersonLogin() {
+        return authorPersonLogin;
     }
 
-    public void setPersonAuthor(Person personAuthor) {
-        this.personAuthor = personAuthor;
+    public void setAuthorPersonLogin(PersonLogin authorPersonLogin) {
+        this.authorPersonLogin = authorPersonLogin;
     }
 }
