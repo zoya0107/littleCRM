@@ -13,10 +13,10 @@
 </head>
 <body>
 <div class="container col-10">
-    <h1 th:if="${task.author} != ${curperson.login}">
-        <strong th:text="'Task from' + ' ' + ${task.getPersonAuthor().firstname} + ' ' + ${task.getPersonAuthor().surname}"></strong>
+    <h1 th:if="${task.author} != ${curperson.getPersonLogin().getLogin()}">
+        <strong th:text="'Task from' + ' ' + ${task.getAuthorPersonLogin().getPerson().getFirstname()} + ' ' + ${task.getAuthorPersonLogin().getPerson().getSurname()}"></strong>
     </h1>
-    <h1 th:if="${task.author} == ${curperson.login}">
+    <h1 th:if="${task.author} == ${curperson.getPersonLogin().getLogin()}">
         <strong th:text="'Task from you'"></strong>
     </h1>
     <hr>
@@ -31,8 +31,8 @@
             <input type="text" style="font-size:15px;" readonly="readonly"
                    th:field="${task.topic}" class="form-control mb-4 col-2">
 
-            <label th:if="${task.author} != ${curperson.login}">Sender</label>
-            <input th:if="${task.author} != ${curperson.login}" type="text" style="font-size:15px;" readonly="readonly"
+            <label th:if="${task.author} != ${curperson.getPersonLogin().getLogin()}">Sender</label>
+            <input th:if="${task.author} != ${curperson.getPersonLogin().getLogin()}" type="text" style="font-size:15px;" readonly="readonly"
                    th:field="${task.author}" class="form-control mb-4 col-2">
 
             <label>Task status</label>
@@ -70,7 +70,7 @@
                             <label>Task solution</label>
                             <br>
                             <textarea data-cke-saved-name="Task Solution" rows="5" cols="100" style="font-size:15px;"
-                                      th:readonly="${task.receiver} != ${curperson.login} or ${task.completion.name()}=='DONE'or ${task.completion.name()}=='APPROVED'"
+                                      th:readonly="${task.receiver} != ${curperson.getPersonLogin().getLogin()} or ${task.completion.name()}=='DONE'or ${task.completion.name()}=='APPROVED'"
                                       th:field="*{solution}" class="form-control mb-4 col-6"></textarea>
                         </div>
                     </td>
@@ -80,19 +80,18 @@
         </body>
     </form>
     <p>
-        <!--        <a th:href="@{/home}" class="btn btn-primary">Back</a>-->
     <table style="width:100%;">
         <tr>
             <td>
                 <form action="#" th:action="@{/task/approved/{id}(id=${task.id})}" th:object="${task}"
                       method="POST">
-                    <button th:if="${task.author}==${curperson.login} and ${task.completion.name()}=='DONE'"
+                    <button th:if="${task.author}==${curperson.getPersonLogin().getLogin()} and ${task.completion.name()}=='DONE'"
                             type="submit"
                             class="btn btn-info col-2">Approve
                     </button>
                 </form>
                 <button id="send_button"
-                        th:if="${task.receiver}==${curperson.login} and ${task.completion.name()}=='START'"
+                        th:if="${task.receiver}==${curperson.getPersonLogin().getLogin()} and ${task.completion.name()}=='START'"
                         type="submit"
                         class="btn btn-info col-2">Send
                 </button>

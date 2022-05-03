@@ -13,10 +13,10 @@
 </head>
 <body>
 <div class="container col-10">
-    <h1 th:if="${message.author} != ${curperson.login}">
-        <strong th:text="'Message from' + ' ' + ${message.getPersonAuthor().firstname} + ' ' + ${message.getPersonAuthor().surname}"></strong>
+    <h1 th:if="${message.author} != ${curperson.getPersonLogin().getLogin()}">
+        <strong th:text="'Message from' + ' ' + ${message.getAuthorPersonLogin().getPerson().getFirstname()} + ' ' + ${message.getAuthorPersonLogin().getPerson().getSurname()}"></strong>
     </h1>
-    <h1 th:if="${message.author} == ${curperson.login}">
+    <h1 th:if="${message.author} == ${curperson.getPersonLogin().getLogin()}">
         <strong th:text="'Message from you'"></strong>
     </h1>
     <hr>
@@ -27,8 +27,8 @@
             <input type="text" style="font-size:15px;" readonly="readonly"
                    th:field="${message.topic}" class="form-control mb-4 col-2">
 
-            <label th:if="${message.author} != ${curperson.login}">Sender</label>
-            <input th:if="${message.author} != ${curperson.login}" type="text" style="font-size:15px;"
+            <label th:if="${message.author} != ${curperson.getPersonLogin().getLogin()}">Sender</label>
+            <input th:if="${message.author} != ${curperson.getPersonLogin().getLogin()}" type="text" style="font-size:15px;"
                    readonly="readonly"
                    th:field="${message.author}" class="form-control mb-4 col-2">
             <label>Message content</label>
@@ -47,7 +47,6 @@
             </td>
         </tr>
     </table>
-    <!--    <a th:href="@{/home}" class="btn btn-primary">Back</a>-->
 </div>
 <script>
     document.getElementById('back_button').addEventListener('click', () => document.getElementById('back').submit());

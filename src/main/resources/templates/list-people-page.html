@@ -33,7 +33,7 @@
         <tr th:each="person : ${listPeople}" th:if="${person.isExistence()==true}">
             <td th:text="${person.surname}"></td>
             <td th:text="${person.firstname}"></td>
-            <td th:text="${person.login}"></td>
+            <td th:text="${person.getPersonLogin().getLogin()}"></td>
             <td th:text="${person.role}"></td>
             <td th:text="${person.status}"></td>
             <td>

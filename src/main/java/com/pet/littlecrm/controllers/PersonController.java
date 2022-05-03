@@ -1,9 +1,11 @@
 package com.pet.littlecrm.controllers;
 
 import com.pet.littlecrm.model.Person;
+import com.pet.littlecrm.model.PersonLogin;
 import com.pet.littlecrm.model.Role;
 import com.pet.littlecrm.model.Status;
 import com.pet.littlecrm.security.PersonDetailsService;
+import com.pet.littlecrm.service.PersonLoginService;
 import com.pet.littlecrm.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -22,17 +24,20 @@ import java.util.List;
 public class PersonController {
     private final PersonService personService;
     private final PersonDetailsService personDetailsService;
+    private final PersonLoginService personLoginService;
 
     @Autowired
-    public PersonController(PersonService personService, PersonDetailsService personDetailsService) {
+    public PersonController(PersonService personService, PersonDetailsService personDetailsService, PersonLoginService personLoginService) {
         this.personService = personService;
         this.personDetailsService = personDetailsService;
+        this.personLoginService = personLoginService;
     }
 
     @GetMapping("/add")
     @PreAuthorize("hasAuthority('people:write')")
     public String addNewPerson(Model model) {
         model.addAttribute("person", new Person());
+        model.addAttribute("personLogin", new PersonLogin());
         List<Role> roleOptions = new ArrayList<Role>(Arrays.asList(Role.values()));
         model.addAttribute("roleoptions", roleOptions);
         List<Status> statusOptions = new ArrayList<Status>(Arrays.asList(Status.values()));
@@ -42,7 +47,9 @@ public class PersonController {
 
     @PostMapping("/save")
     @PreAuthorize("hasAuthority('people:write')")
-    public String saveNewPerson(@ModelAttribute("person") @Valid Person person, BindingResult bindingResult, Model model) {
+    public String saveNewPerson(@ModelAttribute("person") @Valid Person person,
+                                @ModelAttribute("personLogin") @Valid PersonLogin personLogin,
+                                BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             List<Role> roleOptions = new ArrayList<Role>(Arrays.asList(Role.values()));
             model.addAttribute("roleoptions", roleOptions);
@@ -52,6 +59,7 @@ public class PersonController {
         }
         person.setExistence(true);
         personService.savePerson(person);
+        personLoginService.savePersonLogin(personLogin);
         return "redirect:/person/showlist";
     }
 

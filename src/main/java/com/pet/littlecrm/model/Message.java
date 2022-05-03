@@ -21,30 +21,30 @@ public class Message implements Serializable {
             strategy = GenerationType.SEQUENCE,
             generator = "order_sequence"
     )
-    public Long id;
+    private Long id;
     @Column(name = "author")
-    public String author;
+    private String author;
     @Column(name = "date")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    public LocalDate date;
+    private LocalDate date;
     @Column(name = "receiver")
     @ExistingLogin
     @NotEmpty(message = "Receiver is required")
-    public String receiver;
+    private String receiver;
     @Column(name = "content")
     @NotEmpty(message = "Content is required")
-    public String content;
+    private String content;
     @Column(name = "topic")
     @NotEmpty(message = "Topic is required")
-    public String topic;
+    private String topic;
 
     @ManyToOne
     @JoinColumn(name = "receiver", referencedColumnName = "login", insertable = false, updatable = false)
-    private Person personReceiver;
+    private PersonLogin receiverPersonLogin;
 
     @ManyToOne
     @JoinColumn(name = "author", referencedColumnName = "login", insertable = false, updatable = false)
-    private Person personAuthor;
+    private PersonLogin authorPersonLogin;
 
     public Message(Long id, String author, LocalDate date, String receiver, String content, String topic) {
         this.id = id;
@@ -106,19 +106,19 @@ public class Message implements Serializable {
         this.topic = topic;
     }
 
-    public Person getPersonReceiver() {
-        return personReceiver;
+    public PersonLogin getReceiverPersonLogin() {
+        return receiverPersonLogin;
     }
 
-    public void setPersonReceiver(Person personReceiver) {
-        this.personReceiver = personReceiver;
+    public void setReceiverPersonLogin(PersonLogin receiverPersonLogin) {
+        this.receiverPersonLogin = receiverPersonLogin;
     }
 
-    public Person getPersonAuthor() {
-        return personAuthor;
+    public PersonLogin getAuthorPersonLogin() {
+        return authorPersonLogin;
     }
 
-    public void setPersonAuthor(Person personAuthor) {
-        this.personAuthor = personAuthor;
+    public void setAuthorPersonLogin(PersonLogin authorPersonLogin) {
+        this.authorPersonLogin = authorPersonLogin;
     }
 }

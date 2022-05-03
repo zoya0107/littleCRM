@@ -48,7 +48,7 @@
                 </thead>
                 <tbody>
                 <tr th:each="message : ${listMessages}" th:if="${message.receiver} == ${#request.remoteUser}">
-                    <td th:text="${message.getPersonAuthor().firstname} + ' ' + ${message.getPersonAuthor().surname}"></td>
+                    <td th:text="${message.getAuthorPersonLogin().getPerson().getFirstname()} + ' ' + ${message.getAuthorPersonLogin().getPerson().getSurname()}"></td>
                     <td th:text="${message.topic}"></td>
                     <td th:text="${message.date}"></td>
                     <td>
@@ -74,7 +74,7 @@
                 </thead>
                 <tbody>
                 <tr th:each="task : ${listTasks}" th:if="${task.receiver} == ${#request.remoteUser}">
-                    <td th:text="${task.getPersonAuthor().firstname} + ' ' + ${task.getPersonAuthor().surname}"></td>
+                    <td th:text="${task.getAuthorPersonLogin().getPerson().getFirstname()} + ' ' + ${task.getAuthorPersonLogin().getPerson().getSurname()}"></td>
                     <td th:text="${task.topic}"></td>
                     <td th:text="${task.date}"></td>
                     <td th:text="${task.duedate}"></td>
@@ -111,7 +111,7 @@
                 </thead>
                 <tbody>
                 <tr th:each="message : ${listMessages}" th:if="${message.author} == ${#request.remoteUser}">
-                    <td th:text="${message.getPersonReceiver().firstname} + ' ' + ${message.getPersonReceiver().surname}"></td>
+                    <td th:text="${message.getReceiverPersonLogin().getPerson().getFirstname()} + ' ' + ${message.getReceiverPersonLogin().getPerson().getSurname()}"></td>
                     <td th:text="${message.topic}"></td>
                     <td th:text="${message.date}"></td>
                     <td>
@@ -137,7 +137,7 @@
                 </thead>
                 <tbody>
                 <tr th:each="task : ${listTasks}" th:if="${task.author} == ${#request.remoteUser}">
-                    <td th:text="${task.getPersonReceiver().firstname} + ' ' + ${task.getPersonReceiver().surname}"></td>
+                    <td th:text="${task.getReceiverPersonLogin().getPerson().getFirstname()} + ' ' + ${task.getReceiverPersonLogin().getPerson().getSurname()}"></td>
                     <td th:text="${task.topic}"></td>
                     <td th:text="${task.date}"></td>
                     <td th:text="${task.duedate}"></td>

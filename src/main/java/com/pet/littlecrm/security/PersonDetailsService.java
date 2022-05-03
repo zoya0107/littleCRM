@@ -1,6 +1,8 @@
 package com.pet.littlecrm.security;
 
 import com.pet.littlecrm.model.Person;
+import com.pet.littlecrm.model.PersonLogin;
+import com.pet.littlecrm.repository.LoginRepository;
 import com.pet.littlecrm.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,15 +17,18 @@ import java.util.Optional;
 public class PersonDetailsService implements UserDetailsService {
 
     private final PersonRepository personRepository;
+    private final LoginRepository loginRepository;
 
     @Autowired
-    public PersonDetailsService(PersonRepository personRepository) {
+    public PersonDetailsService(PersonRepository personRepository, LoginRepository loginRepository) {
         this.personRepository = personRepository;
+        this.loginRepository = loginRepository;
     }
 
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-        Person person = personRepository.findPeopleByLogin(login).orElseThrow(() -> new UsernameNotFoundException("User doesn't exist"));
+        Long id = loginRepository.findIdByLogin(login).get().getId();
+        Person person = personRepository.findPeopleById(id).orElseThrow(() -> new UsernameNotFoundException("User doesn't exist"));
         return PersonSecurity.fromPerson(person);
     }
 
@@ -37,7 +42,7 @@ public class PersonDetailsService implements UserDetailsService {
     }
 
     public Boolean isLoginAlreadyInUse(String login) {
-        Optional<Person> person = personRepository.findPeopleByLogin(login);
-        return person.isPresent();
+        Optional<PersonLogin> personLogin = loginRepository.findIdByLogin(login);
+        return personLogin.isPresent();
     }
 }

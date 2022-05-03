@@ -15,9 +15,13 @@
 <div class="container col-10">
     <h1><b>Person card</b></h1>
     <hr>
-    <h2>Update personal data</h2>
+    <h2>Update personal data for login: </h2>
+
     <form id="update" action="#" th:action="@{/person/update}" th:object="${person}"
           method="POST">
+        <h2>
+            <strong th:text="${person.getPersonLogin().getLogin()}"></strong>
+        </h2>
         <input type="hidden" th:field="*{id}"/>
         <label for="firstname">Firstname: </label>
         <div style="color:red" th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}">Firstname error</div>
@@ -27,9 +31,6 @@
         <div style="color:red" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">Surname error</div>
         <input id="surname" type="text" th:field="*{surname}" class="form-control mb-4 col-4" style="width:250px;">
 
-        <label for="login">Login: </label>
-        <input id="login" type="text" th:value="*{login}" class="form-control mb-4 col-4" style="width:250px;"
-               readonly="readonly">
         <label for="password">Password: </label>
         <div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password error</div>
         <input id="password" type="text" th:field="*{password}" class="form-control mb-4 col-4" style="width:250px;">

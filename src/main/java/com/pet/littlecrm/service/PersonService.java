@@ -1,6 +1,7 @@
 package com.pet.littlecrm.service;
 
 import com.pet.littlecrm.model.Person;
+import com.pet.littlecrm.repository.LoginRepository;
 import com.pet.littlecrm.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,10 +14,12 @@ import java.util.stream.Collectors;
 @Service
 public class PersonService {
     private final PersonRepository personRepository;
+    private final LoginRepository loginRepository;
 
     @Autowired
-    public PersonService(PersonRepository personRepository) {
+    public PersonService(PersonRepository personRepository, LoginRepository loginRepository) {
         this.personRepository = personRepository;
+        this.loginRepository = loginRepository;
     }
 
     public List<Person> getPeople() {
@@ -41,7 +44,8 @@ public class PersonService {
     }
 
     public Person getPersonByLogin(String login) {
-        Optional<Person> optional = personRepository.findPeopleByLogin(login);
+        Long id = loginRepository.findIdByLogin(login).get().getId();
+        Optional<Person> optional = personRepository.findPeopleById(id);
         Person person = null;
         if (optional.isPresent()) {
             person = optional.get();
