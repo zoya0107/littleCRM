@@ -4,7 +4,7 @@ Spring MVC web application for messaging and tasks exchange between registered u
 
 ## Description
 
-It is my first project. In this application a registered user can write messages, create and complete tasks. User with admin role is authorised to add new users and update the data of existing ones. The application is written using Spring MVC framework and Maven for external dependency managment.
+It is my first project. In this application a registered user can write messages, create and complete tasks. User with admin role is authorised to add new users and update the data of existing ones. The application is written using Spring MVC framework and Maven for external dependency management.
 
 ## Link to the app on Heroku
 
