@@ -1,4 +1,4 @@
-# Little CRM
+# Little CRM <a href="url"><img src="https://github.com/zoya0107/zoya0107/blob/main/littlecrm.png" align="right" height="150" width="200" ></a>
 
 Spring MVC web application for messaging and tasks exchange between registered users.
 
