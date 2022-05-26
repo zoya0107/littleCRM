@@ -19,12 +19,6 @@ public class TaskService {
         this.taskRepository = taskRepository;
     }
 
-    public List<Task> getTasks() {
-        return taskRepository.findAll().stream()
-                .sorted(Comparator.comparing(Task::getId).reversed())
-                .collect(Collectors.toList());
-    }
-
     public void saveTask(Task task) {
         this.taskRepository.save(task);
     }
@@ -38,5 +32,17 @@ public class TaskService {
             throw new RuntimeException("There is no task with id " + id);
         }
         return task;
+    }
+
+    public List<Task> getTasksByReceiver(String login) {
+        return taskRepository.findTasksByReceiver(login).stream()
+                .sorted(Comparator.comparing(Task::getId).reversed())
+                .collect(Collectors.toList());
+    }
+
+    public List<Task> getTasksByAuthor(String login) {
+        return taskRepository.findTasksByAuthor(login).stream()
+                .sorted(Comparator.comparing(Task::getId).reversed())
+                .collect(Collectors.toList());
     }
 }

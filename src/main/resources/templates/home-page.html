@@ -47,7 +47,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="message : ${listMessages}" th:if="${message.receiver} == ${#request.remoteUser}">
+                <tr th:each="message : ${listReceivedMessages}">
                     <td th:text="${message.getAuthorPersonLogin().getPerson().getFirstname()} + ' ' + ${message.getAuthorPersonLogin().getPerson().getSurname()}"></td>
                     <td th:text="${message.topic}"></td>
                     <td th:text="${message.date}"></td>
@@ -73,7 +73,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="task : ${listTasks}" th:if="${task.receiver} == ${#request.remoteUser}">
+                <tr th:each="task : ${listReceivedTasks}">
                     <td th:text="${task.getAuthorPersonLogin().getPerson().getFirstname()} + ' ' + ${task.getAuthorPersonLogin().getPerson().getSurname()}"></td>
                     <td th:text="${task.topic}"></td>
                     <td th:text="${task.date}"></td>
@@ -110,7 +110,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="message : ${listMessages}" th:if="${message.author} == ${#request.remoteUser}">
+                <tr th:each="message : ${listSentMessages}">
                     <td th:text="${message.getReceiverPersonLogin().getPerson().getFirstname()} + ' ' + ${message.getReceiverPersonLogin().getPerson().getSurname()}"></td>
                     <td th:text="${message.topic}"></td>
                     <td th:text="${message.date}"></td>
@@ -136,7 +136,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="task : ${listTasks}" th:if="${task.author} == ${#request.remoteUser}">
+                <tr th:each="task : ${listSentTasks}">
                     <td th:text="${task.getReceiverPersonLogin().getPerson().getFirstname()} + ' ' + ${task.getReceiverPersonLogin().getPerson().getSurname()}"></td>
                     <td th:text="${task.topic}"></td>
                     <td th:text="${task.date}"></td>

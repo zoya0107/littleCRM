@@ -33,8 +33,10 @@ public class HomeController {
     public String getHomePage(Model model) {
         Person person = personService.getPersonByLogin(personDetailsService.getCurrentPerson());
         model.addAttribute("curperson", person);
-        model.addAttribute("listMessages", messageService.getMessages());
-        model.addAttribute("listTasks", taskService.getTasks());
+        model.addAttribute("listReceivedMessages", messageService.getMessagesByReceiver(personDetailsService.getCurrentPerson()));
+        model.addAttribute("listSentMessages", messageService.getMessagesByAuthor(personDetailsService.getCurrentPerson()));
+        model.addAttribute("listReceivedTasks", taskService.getTasksByReceiver(personDetailsService.getCurrentPerson()));
+        model.addAttribute("listSentTasks", taskService.getTasksByAuthor(personDetailsService.getCurrentPerson()));
         return "home-page";
     }
 }
