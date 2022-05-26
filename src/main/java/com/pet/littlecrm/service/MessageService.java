@@ -19,12 +19,6 @@ public class MessageService {
         this.messageRepository = messageRepository;
     }
 
-    public List<Message> getMessages() {
-        return messageRepository.findAll().stream()
-                .sorted(Comparator.comparing(Message::getId).reversed())
-                .collect(Collectors.toList());
-    }
-
     public void saveMessage(Message message) {
         this.messageRepository.save(message);
     }
@@ -38,5 +32,17 @@ public class MessageService {
             throw new RuntimeException("There is no message with id " + id);
         }
         return message;
+    }
+
+    public List<Message> getMessagesByReceiver(String login) {
+        return messageRepository.findMessagesByReceiver(login).stream()
+                .sorted(Comparator.comparing(Message::getId).reversed())
+                .collect(Collectors.toList());
+    }
+
+    public List<Message> getMessagesByAuthor(String login) {
+        return messageRepository.findMessagesByAuthor(login).stream()
+                .sorted(Comparator.comparing(Message::getId).reversed())
+                .collect(Collectors.toList());
     }
 }
